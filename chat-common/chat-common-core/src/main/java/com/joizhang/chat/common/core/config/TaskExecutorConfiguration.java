@@ -43,7 +43,7 @@ public class TaskExecutorConfiguration implements AsyncConfigurer {
         taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         taskExecutor.setWaitForTasksToCompleteOnShutdown(true);
         taskExecutor.setAwaitTerminationSeconds(awaitTerminationSeconds.orElse(60));
-        taskExecutor.setThreadNamePrefix("PIG-Thread-");
+        taskExecutor.setThreadNamePrefix("Chat-Thread-");
         taskExecutor.initialize();
         return taskExecutor;
     }

@@ -17,6 +17,8 @@
 
         <chat.common.version>${project.version}</chat.common.version>
 
+        <springdoc.version>1.6.9</springdoc.version>
+        <swagger.core.version>2.2.0</swagger.core.version>
         <fastjson.version>1.2.83</fastjson.version>
         <mysql.version>8.0.32</mysql.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
@@ -30,6 +32,27 @@
                 <groupId>com.joizhang</groupId>
                 <artifactId>chat-common-core</artifactId>
                 <version>${chat.common.version}</version>
+            </dependency>
+            <!--springdoc -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-webmvc-core</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-webflux-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-security</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.core.version}</version>
             </dependency>
             <!--fastjson 版本-->
             <dependency>
