@@ -1,0 +1,6 @@
+com.joizhang.chat.common.core.config.TaskExecutorConfiguration
+com.joizhang.chat.common.core.config.JacksonConfiguration
+com.joizhang.chat.common.core.config.RedisTemplateConfiguration
+com.joizhang.chat.common.core.config.RestTemplateConfiguration
+com.joizhang.chat.common.core.config.WebMvcConfiguration
+com.joizhang.chat.common.core.util.SpringContextHolder
