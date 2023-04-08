@@ -1,0 +1,7 @@
+com.joizhang.chat.admin.api.feign.RemoteClientDetailsService
+com.joizhang.chat.admin.api.feign.RemoteDictService
+com.joizhang.chat.admin.api.feign.RemoteDeptService
+com.joizhang.chat.admin.api.feign.RemoteLogService
+com.joizhang.chat.admin.api.feign.RemoteTokenService
+com.joizhang.chat.admin.api.feign.RemoteUserService
+com.joizhang.chat.admin.api.feign.RemoteParamService
