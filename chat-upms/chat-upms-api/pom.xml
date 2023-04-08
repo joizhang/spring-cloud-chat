@@ -34,5 +34,10 @@
             <groupId>com.joizhang</groupId>
             <artifactId>chat-common-mybatis</artifactId>
         </dependency>
+        <!-- excel 导入导出 https://github.com/pig-mesh/excel-spring-boot-starter -->
+        <dependency>
+            <groupId>com.pig4cloud.excel</groupId>
+            <artifactId>excel-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 </project>
