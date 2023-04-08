@@ -24,7 +24,7 @@ import java.sql.SQLException;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class MyPigPaginationInnerInterceptor extends PaginationInnerInterceptor {
+public class MyPaginationInnerInterceptor extends PaginationInnerInterceptor {
 
     /**
      * 数据库类型
@@ -40,11 +40,11 @@ public class MyPigPaginationInnerInterceptor extends PaginationInnerInterceptor 
      */
     private IDialect dialect;
 
-    public MyPigPaginationInnerInterceptor(DbType dbType) {
+    public MyPaginationInnerInterceptor(DbType dbType) {
         this.dbType = dbType;
     }
 
-    public MyPigPaginationInnerInterceptor(IDialect dialect) {
+    public MyPaginationInnerInterceptor(IDialect dialect) {
         this.dialect = dialect;
     }
 

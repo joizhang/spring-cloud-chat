@@ -3,7 +3,7 @@ package com.joizhang.chat.common.mybatis;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.joizhang.chat.common.mybatis.config.MybatisPlusMetaObjectHandler;
-import com.joizhang.chat.common.mybatis.plugins.MyPigPaginationInnerInterceptor;
+import com.joizhang.chat.common.mybatis.plugins.MyPaginationInnerInterceptor;
 import com.joizhang.chat.common.mybatis.resolver.SqlFilterArgumentResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +17,7 @@ import java.util.List;
  */
 @Configuration(proxyBeanMethods = false)
 public class MybatisAutoConfiguration implements WebMvcConfigurer {
+
     /**
      * SQL 过滤器避免SQL 注入
      *
@@ -33,7 +34,7 @@ public class MybatisAutoConfiguration implements WebMvcConfigurer {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor(new MyPigPaginationInnerInterceptor());
+        interceptor.addInnerInterceptor(new MyPaginationInnerInterceptor());
         return interceptor;
     }
 
