@@ -1,0 +1,6 @@
+com.joizhang.chat.common.security.service.MyUserDetailsServiceImpl
+com.joizhang.chat.common.security.service.MyRedisOAuth2AuthorizationService
+com.joizhang.chat.common.security.service.MyRedisOAuth2AuthorizationConsentService
+com.joizhang.chat.common.security.component.SecurityInnerAspect
+com.joizhang.chat.common.security.component.SecurityMessageSourceConfiguration
+com.joizhang.chat.common.security.service.MyRemoteRegisteredClientRepository
