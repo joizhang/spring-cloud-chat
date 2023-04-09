@@ -1,0 +1,70 @@
+version: '3'
+services:
+#  my-pig-mysql:
+#    build:
+#      context: ./db
+#    environment:
+#      MYSQL_ROOT_HOST: "%"
+#      MYSQL_ROOT_PASSWORD: root
+#    container_name: my-pig-mysql
+#    image: my-pig-mysql
+#    ports:
+#      - "3306:3306"
+#    restart: always
+#
+#  my-pig-redis:
+#    image: redis:alpine
+#    container_name: my-pig-redis
+#    hostname: my-pig-redis
+#    ports:
+#      - "6379:6379"
+#    restart: always
+
+  chat-register:
+    image: joizhang/nacos-server:2.2.0
+    environment:
+      - PREFER_HOST_MODE=hostname
+      - MODE=standalone
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=xinlin-04
+      - MYSQL_SERVICE_DB_NAME=chat_config
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_USER=test
+      - MYSQL_SERVICE_PASSWORD=CCCC_123
+      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    container_name: chat-register
+    hostname: chat-register
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+#    restart: always
+
+#  my-pig-gateway:
+#    build:
+#      context: ./my-pig-gateway
+#    image: my-pig-gateway
+#    container_name: my-pig-gateway
+#    hostname: my-pig-gateway
+#    ports:
+#      - "9999:9999"
+#    restart: always
+#
+#  my-pig-auth:
+#    build:
+#      context: ./my-pig-auth
+#    image: my-pig-auth
+#    container_name: my-pig-auth
+#    hostname: my-pig-auth
+#    depends_on:
+#      - my-pig-gateway
+#    restart: always
+#
+#  my-pig-upms:
+#    build:
+#      context: ./my-pig-upms/my-pig-upms-biz
+#    image: my-pig-upms
+#    container_name: my-pig-upms
+#    hostname: my-pig-upms
+#    depends_on:
+#      - my-pig-gateway
+#    restart: always

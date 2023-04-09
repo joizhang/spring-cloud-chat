@@ -14,6 +14,8 @@
         <module>chat-websocket</module>
         <module>chat-gateway</module>
         <module>chat-common</module>
+        <module>chat-auth</module>
+        <module>chat-upms</module>
     </modules>
 
     <properties>
@@ -24,6 +26,10 @@
         <spring-boot.version>2.7.5</spring-boot.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
+        <spring.authorization.version>0.3.1</spring.authorization.version>
+
+        <jasypt.version>2.1.0</jasypt.version>
+        <captcha.version>2.2.2</captcha.version>
     </properties>
 
     <dependencyManagement>
@@ -64,6 +70,29 @@
     </dependencyManagement>
 
     <dependencies>
+        <!--配置文件处理器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--配置文件加解密-->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>${jasypt.version}</version>
+        </dependency>
+        <!--监控-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--监控客户端-->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
         <!--Lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
