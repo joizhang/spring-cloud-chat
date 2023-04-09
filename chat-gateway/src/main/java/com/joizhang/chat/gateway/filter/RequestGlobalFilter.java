@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * <p>
  * 支持swagger添加X-Forwarded-Prefix header （F SR2 已经支持，不需要自己维护）
  */
-public class ChatRequestGlobalFilter implements GlobalFilter, Ordered {
+public class RequestGlobalFilter implements GlobalFilter, Ordered {
 
     /**
      * Process the Web request and (optionally) delegate to the next {@code WebFilter}
@@ -65,5 +65,4 @@ public class ChatRequestGlobalFilter implements GlobalFilter, Ordered {
     public int getOrder() {
         return 10;
     }
-
 }

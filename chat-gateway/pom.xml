@@ -51,6 +51,12 @@
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
         </dependency>
+        <!--验证码 源码： https://github.com/pig-mesh/easy-captcha -->
+        <dependency>
+            <groupId>com.pig4cloud.plugin</groupId>
+            <artifactId>captcha-spring-boot-starter</artifactId>
+            <version>${captcha.version}</version>
+        </dependency>
         <!-- 工具包依赖 -->
         <dependency>
             <groupId>com.joizhang</groupId>

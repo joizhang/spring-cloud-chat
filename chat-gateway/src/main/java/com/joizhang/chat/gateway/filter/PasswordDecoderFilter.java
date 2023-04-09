@@ -145,5 +145,4 @@ public class PasswordDecoderFilter extends AbstractGatewayFilterFactory<Object> 
             }
         };
     }
-
 }
