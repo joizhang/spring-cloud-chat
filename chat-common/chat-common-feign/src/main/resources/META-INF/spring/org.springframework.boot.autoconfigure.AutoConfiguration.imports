@@ -1,2 +1,2 @@
-com.joizhang.chat.common.feign.MyPigFeignAutoConfiguration
+com.joizhang.chat.common.feign.MyFeignAutoConfiguration
 com.joizhang.chat.common.feign.sentinel.handle.GlobalBizExceptionHandler

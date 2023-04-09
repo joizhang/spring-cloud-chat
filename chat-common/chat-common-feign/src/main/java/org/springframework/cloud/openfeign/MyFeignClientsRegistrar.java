@@ -1,6 +1,6 @@
 package org.springframework.cloud.openfeign;
 
-import com.joizhang.chat.common.feign.config.MyFeignAutoConfiguration;
+import com.joizhang.chat.common.feign.MyFeignAutoConfiguration;
 import lombok.Getter;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;

@@ -15,5 +15,11 @@
     <modules>
         <module>chat-common-bom</module>
         <module>chat-common-core</module>
+        <module>chat-common-feign</module>
+        <module>chat-common-security</module>
+        <module>chat-common-mybatis</module>
+        <module>chat-common-log</module>
+        <module>chat-common-swagger</module>
+        <module>chat-common-xss</module>
     </modules>
 </project>

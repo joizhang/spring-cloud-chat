@@ -1,4 +1,4 @@
-package com.joizhang.chat.common.feign.config;
+package com.joizhang.chat.common.feign;
 
 import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;

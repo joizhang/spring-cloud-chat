@@ -20,9 +20,13 @@
         <springdoc.version>1.6.9</springdoc.version>
         <swagger.core.version>2.2.0</swagger.core.version>
         <fastjson.version>1.2.83</fastjson.version>
+        <excel.version>1.2.6</excel.version>
+        <oss.version>1.0.5</oss.version>
+        <sms.version>2.0.2</sms.version>
         <mysql.version>8.0.32</mysql.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <hutool.version>5.8.16</hutool.version>
+        <mica.version>2.7.10</mica.version>
         <spring-boot.version>2.7.5</spring-boot.version>
     </properties>
 
@@ -31,6 +35,41 @@
             <dependency>
                 <groupId>com.joizhang</groupId>
                 <artifactId>chat-common-core</artifactId>
+                <version>${chat.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.joizhang</groupId>
+                <artifactId>chat-common-feign</artifactId>
+                <version>${chat.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.joizhang</groupId>
+                <artifactId>chat-common-mybatis</artifactId>
+                <version>${chat.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.joizhang</groupId>
+                <artifactId>chat-common-security</artifactId>
+                <version>${chat.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.joizhang</groupId>
+                <artifactId>chat-common-log</artifactId>
+                <version>${chat.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.joizhang</groupId>
+                <artifactId>chat-common-swagger</artifactId>
+                <version>${chat.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.joizhang</groupId>
+                <artifactId>chat-common-xss</artifactId>
+                <version>${chat.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.joizhang</groupId>
+                <artifactId>chat-upms-api</artifactId>
                 <version>${chat.common.version}</version>
             </dependency>
             <!--springdoc -->
@@ -60,6 +99,24 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
+            <!-- excel 导入导出 -->
+            <dependency>
+                <groupId>com.pig4cloud.excel</groupId>
+                <artifactId>excel-spring-boot-starter</artifactId>
+                <version>${excel.version}</version>
+            </dependency>
+            <!--  阿里云短信下发 -->
+            <dependency>
+                <groupId>io.springboot.sms</groupId>
+                <artifactId>aliyun-sms-spring-boot-starter</artifactId>
+                <version>${sms.version}</version>
+            </dependency>
+            <!--oss-->
+            <dependency>
+                <groupId>com.pig4cloud.plugin</groupId>
+                <artifactId>oss-spring-boot-starter</artifactId>
+                <version>${oss.version}</version>
+            </dependency>
             <!--orm 相关-->
             <dependency>
                 <groupId>mysql</groupId>
@@ -86,6 +143,14 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-bom</artifactId>
                 <version>${hutool.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--mica bom 工具类-->
+            <dependency>
+                <groupId>net.dreamlu</groupId>
+                <artifactId>mica-bom</artifactId>
+                <version>${mica.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
