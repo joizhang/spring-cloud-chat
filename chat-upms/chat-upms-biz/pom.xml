@@ -1,0 +1,108 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.joizhang</groupId>
+        <artifactId>chat-upms</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>chat-upms-biz</artifactId>
+    <packaging>jar</packaging>
+
+    <description>通用用户权限管理系统业务处理模块</description>
+
+    <dependencies>
+        <!--注册中心客户端-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <!--配置中心客户端-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <!-- 阿里云短信下发 -->
+        <dependency>
+            <groupId>io.springboot.sms</groupId>
+            <artifactId>aliyun-sms-spring-boot-starter</artifactId>
+        </dependency>
+        <!--upms api、model 模块-->
+        <dependency>
+            <groupId>com.joizhang</groupId>
+            <artifactId>chat-upms-api</artifactId>
+        </dependency>
+        <!--文件管理-->
+        <dependency>
+            <groupId>com.pig4cloud.plugin</groupId>
+            <artifactId>oss-spring-boot-starter</artifactId>
+        </dependency>
+        <!--feign 调用-->
+        <dependency>
+            <groupId>com.joizhang</groupId>
+            <artifactId>chat-common-feign</artifactId>
+        </dependency>
+        <!--安全模块-->
+        <dependency>
+            <groupId>com.joizhang</groupId>
+            <artifactId>chat-common-security</artifactId>
+        </dependency>
+        <!--日志处理-->
+        <dependency>
+            <groupId>com.joizhang</groupId>
+            <artifactId>chat-common-log</artifactId>
+        </dependency>
+        <!--接口文档-->
+        <dependency>
+            <groupId>com.joizhang</groupId>
+            <artifactId>chat-common-swagger</artifactId>
+        </dependency>
+        <!-- orm 模块-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!--xss 过滤-->
+        <dependency>
+            <groupId>com.joizhang</groupId>
+            <artifactId>chat-common-xss</artifactId>
+        </dependency>
+        <!--undertow容器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/*.xlsx</exclude>
+                    <exclude>**/*.xls</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.xlsx</include>
+                    <include>**/*.xls</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+</project>
