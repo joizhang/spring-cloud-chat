@@ -18,6 +18,11 @@
             <groupId>com.joizhang</groupId>
             <artifactId>chat-common-core</artifactId>
         </dependency>
+        <!--mybatis 依赖-->
+        <dependency>
+            <groupId>com.joizhang</groupId>
+            <artifactId>chat-common-mybatis</artifactId>
+        </dependency>
         <!--swagger-->
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
@@ -28,11 +33,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-openfeign-core</artifactId>
             <optional>true</optional>
-        </dependency>
-        <!--mybatis 依赖-->
-        <dependency>
-            <groupId>com.joizhang</groupId>
-            <artifactId>chat-common-mybatis</artifactId>
         </dependency>
         <!-- excel 导入导出 https://github.com/pig-mesh/excel-spring-boot-starter -->
         <dependency>
