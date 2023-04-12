@@ -23,20 +23,10 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-        <!-- 阿里云短信下发 -->
-        <dependency>
-            <groupId>io.springboot.sms</groupId>
-            <artifactId>aliyun-sms-spring-boot-starter</artifactId>
-        </dependency>
         <!--upms api、model 模块-->
         <dependency>
             <groupId>com.joizhang</groupId>
             <artifactId>chat-upms-api</artifactId>
-        </dependency>
-        <!--文件管理-->
-        <dependency>
-            <groupId>com.pig4cloud.plugin</groupId>
-            <artifactId>oss-spring-boot-starter</artifactId>
         </dependency>
         <!--feign 调用-->
         <dependency>
@@ -47,6 +37,11 @@
         <dependency>
             <groupId>com.joizhang</groupId>
             <artifactId>chat-common-security</artifactId>
+        </dependency>
+        <!--xss 过滤-->
+        <dependency>
+            <groupId>com.joizhang</groupId>
+            <artifactId>chat-common-xss</artifactId>
         </dependency>
         <!--日志处理-->
         <dependency>
@@ -67,10 +62,15 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <!--xss 过滤-->
+        <!-- 阿里云短信下发 -->
         <dependency>
-            <groupId>com.joizhang</groupId>
-            <artifactId>chat-common-xss</artifactId>
+            <groupId>io.springboot.sms</groupId>
+            <artifactId>aliyun-sms-spring-boot-starter</artifactId>
+        </dependency>
+        <!--文件管理-->
+        <dependency>
+            <groupId>com.pig4cloud.plugin</groupId>
+            <artifactId>oss-spring-boot-starter</artifactId>
         </dependency>
         <!--undertow容器-->
         <dependency>

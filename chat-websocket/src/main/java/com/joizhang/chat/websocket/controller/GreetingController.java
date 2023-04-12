@@ -7,6 +7,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
+import java.security.Principal;
+
 @Controller
 @RequiredArgsConstructor
 public class GreetingController {
@@ -14,10 +16,10 @@ public class GreetingController {
     private final SimpMessageSendingOperations sendingOperations;
 
     @MessageMapping("/hello")
-    public void greeting(MessageVo message) throws Exception {
-        Thread.sleep(1000); // simulated delay
-        Greeting greeting = new Greeting("Hello, " + message.getName() + "!");
-        sendingOperations.convertAndSend(message.getDestination(), greeting);
+    public void greeting(Principal principal, MessageVo message) {
+        message.setFrom(principal.getName());
+        Greeting greeting = new Greeting(message.getContent());
+        sendingOperations.convertAndSendToUser(message.getTo(), message.getDestination(), greeting);
     }
 
 }
