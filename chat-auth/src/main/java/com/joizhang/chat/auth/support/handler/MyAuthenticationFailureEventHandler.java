@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- *
+ * 登陆失败处理
  */
 @Slf4j
 public class MyAuthenticationFailureEventHandler implements AuthenticationFailureHandler {
@@ -41,7 +41,8 @@ public class MyAuthenticationFailureEventHandler implements AuthenticationFailur
      */
     @Override
     @SneakyThrows
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+    public void onAuthenticationFailure(HttpServletRequest request,
+                                        HttpServletResponse response,
                                         AuthenticationException exception) {
         String username = request.getParameter(OAuth2ParameterNames.USERNAME);
 
@@ -64,7 +65,8 @@ public class MyAuthenticationFailureEventHandler implements AuthenticationFailur
         sendErrorResponse(response, exception);
     }
 
-    private void sendErrorResponse(HttpServletResponse response, AuthenticationException exception) throws IOException {
+    private void sendErrorResponse(HttpServletResponse response,
+                                   AuthenticationException exception) throws IOException {
         ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
         httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
         this.errorHttpResponseConverter.write(

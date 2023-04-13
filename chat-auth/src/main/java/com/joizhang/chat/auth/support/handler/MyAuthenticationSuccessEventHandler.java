@@ -30,7 +30,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
 /**
- *
+ * 登陆成功处理
  */
 @Slf4j
 public class MyAuthenticationSuccessEventHandler implements AuthenticationSuccessHandler {
@@ -48,9 +48,11 @@ public class MyAuthenticationSuccessEventHandler implements AuthenticationSucces
      */
     @SneakyThrows
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+    public void onAuthenticationSuccess(HttpServletRequest request,
+                                        HttpServletResponse response,
                                         Authentication authentication) {
-        OAuth2AccessTokenAuthenticationToken accessTokenAuthentication = (OAuth2AccessTokenAuthenticationToken) authentication;
+        OAuth2AccessTokenAuthenticationToken accessTokenAuthentication =
+                (OAuth2AccessTokenAuthenticationToken) authentication;
         Map<String, Object> map = accessTokenAuthentication.getAdditionalParameters();
         if (MapUtil.isNotEmpty(map)) {
             // 发送异步日志事件
@@ -74,9 +76,9 @@ public class MyAuthenticationSuccessEventHandler implements AuthenticationSucces
         sendAccessTokenResponse(request, response, authentication);
     }
 
-    private void sendAccessTokenResponse(HttpServletRequest request, HttpServletResponse response,
+    private void sendAccessTokenResponse(HttpServletRequest request,
+                                         HttpServletResponse response,
                                          Authentication authentication) throws IOException {
-
         OAuth2AccessTokenAuthenticationToken accessTokenAuthentication =
                 (OAuth2AccessTokenAuthenticationToken) authentication;
 
@@ -84,8 +86,10 @@ public class MyAuthenticationSuccessEventHandler implements AuthenticationSucces
         OAuth2RefreshToken refreshToken = accessTokenAuthentication.getRefreshToken();
         Map<String, Object> additionalParameters = accessTokenAuthentication.getAdditionalParameters();
 
-        OAuth2AccessTokenResponse.Builder builder = OAuth2AccessTokenResponse.withToken(accessToken.getTokenValue())
-                .tokenType(accessToken.getTokenType()).scopes(accessToken.getScopes());
+        OAuth2AccessTokenResponse.Builder builder = OAuth2AccessTokenResponse
+                .withToken(accessToken.getTokenValue())
+                .tokenType(accessToken.getTokenType())
+                .scopes(accessToken.getScopes());
         if (accessToken.getIssuedAt() != null && accessToken.getExpiresAt() != null) {
             builder.expiresIn(ChronoUnit.SECONDS.between(accessToken.getIssuedAt(), accessToken.getExpiresAt()));
         }
