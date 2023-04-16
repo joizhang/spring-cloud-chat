@@ -1,7 +1,7 @@
 package com.joizhang.chat.auth.config;
 
 import com.joizhang.chat.auth.support.core.FormIdentityLoginConfigurer;
-import com.joizhang.chat.auth.support.core.MyPigDaoAuthenticationProvider;
+import com.joizhang.chat.auth.support.core.MyDaoAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,7 +35,7 @@ public class WebSecurityConfiguration {
                 .and()
                 .apply(new FormIdentityLoginConfigurer()); // 表单登录个性化
         // 处理 UsernamePasswordAuthenticationToken
-        http.authenticationProvider(new MyPigDaoAuthenticationProvider());
+        http.authenticationProvider(new MyDaoAuthenticationProvider());
         return http.build();
     }
 

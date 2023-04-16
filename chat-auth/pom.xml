@@ -33,6 +33,11 @@
             <groupId>com.joizhang</groupId>
             <artifactId>chat-upms-api</artifactId>
         </dependency>
+        <!--WEB API-->
+        <dependency>
+            <groupId>com.joizhang</groupId>
+            <artifactId>chat-web-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.joizhang</groupId>
             <artifactId>chat-common-security</artifactId>

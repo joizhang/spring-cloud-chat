@@ -3,7 +3,7 @@ package com.joizhang.chat.auth.config;
 import com.joizhang.chat.auth.support.core.CustomOAuth2AccessTokenGenerator;
 import com.joizhang.chat.auth.support.core.CustomOAuth2TokenCustomizer;
 import com.joizhang.chat.auth.support.core.FormIdentityLoginConfigurer;
-import com.joizhang.chat.auth.support.core.MyPigDaoAuthenticationProvider;
+import com.joizhang.chat.auth.support.core.MyDaoAuthenticationProvider;
 import com.joizhang.chat.auth.support.handler.MyAuthenticationFailureEventHandler;
 import com.joizhang.chat.auth.support.handler.MyAuthenticationSuccessEventHandler;
 import com.joizhang.chat.auth.support.password.OAuth2ResourceOwnerPasswordAuthenticationConverter;
@@ -137,7 +137,7 @@ public class AuthorizationServerConfiguration {
                         authenticationManager, authorizationService, oAuth2TokenGenerator());
 
         // 处理 UsernamePasswordAuthenticationToken
-        http.authenticationProvider(new MyPigDaoAuthenticationProvider());
+        http.authenticationProvider(new MyDaoAuthenticationProvider());
         // 处理 OAuth2ResourceOwnerPasswordAuthenticationToken
         http.authenticationProvider(resourceOwnerPasswordAuthenticationProvider);
         // 处理 OAuth2ResourceOwnerSmsAuthenticationToken

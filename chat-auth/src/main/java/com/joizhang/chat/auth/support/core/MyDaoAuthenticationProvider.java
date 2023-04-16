@@ -33,7 +33,7 @@ import java.util.function.Supplier;
 /**
  *
  */
-public class MyPigDaoAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
+public class MyDaoAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
     /**
      * The plaintext password used to perform PasswordEncoder#matches(CharSequence, String)
@@ -57,7 +57,7 @@ public class MyPigDaoAuthenticationProvider extends AbstractUserDetailsAuthentic
 
     private UserDetailsPasswordService userDetailsPasswordService;
 
-    public MyPigDaoAuthenticationProvider() {
+    public MyDaoAuthenticationProvider() {
         setMessageSource(SpringUtil.getBean("securityMessageSource"));
         setPasswordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder());
     }
