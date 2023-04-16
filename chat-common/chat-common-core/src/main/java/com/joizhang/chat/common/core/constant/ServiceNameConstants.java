@@ -15,4 +15,9 @@ public interface ServiceNameConstants {
      */
     String UMPS_SERVICE = "chat-upms-biz";
 
+    /**
+     * 聊天模块
+     */
+    String WEB_SERVICE = "chat-web-biz";
+
 }

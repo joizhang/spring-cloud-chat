@@ -1,4 +1,4 @@
-package com.joizhang.chat.websocket.entity;
+package com.joizhang.chat.web.api.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ChatUser extends BaseEntity {
+public class ChatCustomer extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

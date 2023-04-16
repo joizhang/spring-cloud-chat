@@ -1,7 +1,7 @@
-package com.joizhang.chat.websocket.controller;
+package com.joizhang.chat.web.controller;
 
-import com.joizhang.chat.websocket.vo.Greeting;
-import com.joizhang.chat.websocket.vo.MessageVo;
+import com.joizhang.chat.web.api.vo.Greeting;
+import com.joizhang.chat.web.api.vo.MessageVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -11,7 +11,7 @@ import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
-public class GreetingController {
+public class WebSocketController {
 
     private final SimpMessageSendingOperations sendingOperations;
 

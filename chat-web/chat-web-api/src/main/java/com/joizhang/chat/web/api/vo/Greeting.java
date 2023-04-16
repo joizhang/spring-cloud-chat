@@ -1,4 +1,4 @@
-package com.joizhang.chat.websocket.vo;
+package com.joizhang.chat.web.api.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

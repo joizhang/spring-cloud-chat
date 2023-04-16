@@ -1,4 +1,4 @@
-package com.joizhang.chat.websocket.entity;
+package com.joizhang.chat.web.api.entity;
 
 /**
  * 聊天群 TODO

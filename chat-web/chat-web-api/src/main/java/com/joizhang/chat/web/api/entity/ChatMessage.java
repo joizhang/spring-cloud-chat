@@ -1,4 +1,4 @@
-package com.joizhang.chat.websocket.entity;
+package com.joizhang.chat.web.api.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-//import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 /**
  * 聊天消息
@@ -31,7 +31,7 @@ public class ChatMessage extends BaseEntity {
     /**
      * 发送者ID
      */
-//    @NotBlank(message = "发送者不能为空")
+    @NotBlank(message = "发送者不能为空")
     @Schema(description = "发送者ID")
     @JsonSerialize(using = ToStringSerializer.class)
     private Long messageFrom;
@@ -39,7 +39,7 @@ public class ChatMessage extends BaseEntity {
     /**
      * 接收者ID
      */
-//    @NotBlank(message = "接收者不能为空")
+    @NotBlank(message = "接收者不能为空")
     @Schema(description = "接收者ID")
     @JsonSerialize(using = ToStringSerializer.class)
     private Long messageTo;
