@@ -15,5 +15,6 @@
     <modules>
         <module>chat-upms-api</module>
         <module>chat-upms-biz</module>
+        <module>chat-upms-codegen</module>
     </modules>
 </project>

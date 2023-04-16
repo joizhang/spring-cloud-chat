@@ -1,0 +1,42 @@
+#set($excludeColumns = ["create_time","update_time","create_by","update_by"])
+package ${package}.${moduleName}.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.joizhang.chat.common.mybatis.base.BaseEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Data
+@TableName("${tableName}")
+@EqualsAndHashCode(callSuper = true)
+@Schema(description = "${comments}")
+public class ${className} extends BaseEntity {
+
+#foreach ($column in $columns)
+## 排除部分字段
+#if(!$excludeColumns.contains($column.columnName))
+    /**
+     * $column.comments
+     */
+#if($column.columnName == $pk.columnName)
+    @TableId(type = IdType.ASSIGN_ID)
+#end
+    @Schema(description ="$column.comments"#if($column.hidden),hidden=$column.hidden#end)
+    private $column.attrType $column.lowerAttrName;
+
+#end
+#end
+
+}
