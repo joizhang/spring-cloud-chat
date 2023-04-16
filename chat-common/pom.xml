@@ -21,5 +21,6 @@
         <module>chat-common-log</module>
         <module>chat-common-swagger</module>
         <module>chat-common-xss</module>
+        <module>chat-common-datasource</module>
     </modules>
 </project>
