@@ -20,6 +20,17 @@ services:
 #      - "6379:6379"
 #    restart: always
 
+  chat-rabbitmq:
+    image: rabbitmq:3.11-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBIT_USERNAME}
+      - RABBITMQ_DEFAULT_PASS=${RABBIT_PASSWORD}
+    container_name: chat-rabbitmq
+    hostname: chat-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
   chat-register:
     image: joizhang/nacos-server:2.2.0
     environment:
@@ -29,8 +40,8 @@ services:
       - MYSQL_SERVICE_HOST=xinlin-04
       - MYSQL_SERVICE_DB_NAME=chat_config
       - MYSQL_SERVICE_PORT=3306
-      - MYSQL_SERVICE_USER=test
-      - MYSQL_SERVICE_PASSWORD=CCCC_123
+      - MYSQL_SERVICE_USER=${MYSQL_USERNAME}
+      - MYSQL_SERVICE_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
     container_name: chat-register
     hostname: chat-register
