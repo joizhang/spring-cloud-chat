@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 用户信息客户端
+ * 后台用户信息客户端
  */
 @FeignClient(contextId = "remoteUserService", value = ServiceNameConstants.UMPS_SERVICE)
 public interface RemoteUserService {
@@ -25,7 +25,7 @@ public interface RemoteUserService {
      * @return R
      */
     @GetMapping(value = "/user/info/{username}", headers = SecurityConstants.HEADER_FROM_IN)
-    R<UserInfo> info(@PathVariable("username") String username);
+    R<UserInfo> infoByUsername(@PathVariable("username") String username);
 
     /**
      * 通过手机号码查询用户、角色信息

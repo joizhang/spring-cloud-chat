@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class CustomerController {
 
-    private ChatCustomerService customerService;
+    private final ChatCustomerService customerService;
 
     @GetMapping("hello")
     public ResponseEntity<String> index() {

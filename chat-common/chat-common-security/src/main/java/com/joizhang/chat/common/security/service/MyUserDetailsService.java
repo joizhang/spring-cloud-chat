@@ -67,10 +67,18 @@ public interface MyUserDetailsService extends UserDetailsService, Ordered {
         SysUser user = info.getSysUser();
 
         // 构造security用户
-        return new MyUser(user.getUserId(), user.getDeptId(), user.getUsername(),
-                SecurityConstants.BCRYPT + user.getPassword(), user.getPhone(),
-                true, true, true,
-                StrUtil.equals(user.getLockFlag(), CommonConstants.STATUS_NORMAL), authorities);
+        return new MyUser(
+                user.getUserId(),
+                user.getDeptId(),
+                user.getUsername(),
+                SecurityConstants.BCRYPT + user.getPassword(),
+                user.getPhone(),
+                true,
+                true,
+                true,
+                StrUtil.equals(user.getLockFlag(), CommonConstants.STATUS_NORMAL),
+                authorities
+        );
     }
 
     /**

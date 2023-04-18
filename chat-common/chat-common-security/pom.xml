@@ -27,6 +27,11 @@
             <groupId>com.joizhang</groupId>
             <artifactId>chat-upms-api</artifactId>
         </dependency>
+        <!--WEB API-->
+        <dependency>
+            <groupId>com.joizhang</groupId>
+            <artifactId>chat-web-api</artifactId>
+        </dependency>
         <!--common utils-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
