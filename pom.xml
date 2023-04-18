@@ -11,11 +11,12 @@
     <url>https://github.com/joizhang/spring-boot-chat</url>
 
     <modules>
-        <module>chat-websocket</module>
         <module>chat-gateway</module>
         <module>chat-common</module>
         <module>chat-auth</module>
         <module>chat-upms</module>
+        <module>chat-visual</module>
+        <module>chat-web</module>
     </modules>
 
     <properties>
@@ -27,9 +28,14 @@
         <spring-cloud.version>2021.0.5</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
         <spring.authorization.version>0.3.1</spring.authorization.version>
+        <spring-boot-admin.version>2.7.7</spring-boot-admin.version>
 
         <jasypt.version>2.1.0</jasypt.version>
         <captcha.version>2.2.2</captcha.version>
+        <dynamic-ds.version>3.5.1</dynamic-ds.version>
+        <velocity.version>2.3</velocity.version>
+        <velocity.tool.version>3.1</velocity.tool.version>
+        <configuration.version>1.10</configuration.version>
     </properties>
 
     <dependencyManagement>
