@@ -40,8 +40,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Service
 @RequiredArgsConstructor
+@Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
     private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
@@ -168,7 +168,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 判断手机号是否修改,更新手机号校验验证码
         if (!StrUtil.equals(userVO.getPhone(), userDto.getPhone())) {
-            if (!appService.check(userDto.getPhone(), userDto.getCode())) {
+            if (appService.check(userDto.getPhone(), userDto.getCode())) {
                 return R.failed(MsgUtils.getMessage(ErrorCodes.SYS_APP_SMS_ERROR));
             }
         }
@@ -369,7 +369,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public R<Boolean> registerUser(UserDTO userDto) {
         // 校验验证码
-        if (!appService.check(userDto.getPhone(), userDto.getCode())) {
+        if (appService.check(userDto.getPhone(), userDto.getCode())) {
             return R.failed(MsgUtils.getMessage(ErrorCodes.SYS_APP_SMS_ERROR));
         }
 

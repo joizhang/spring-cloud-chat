@@ -3,9 +3,6 @@ package com.joizhang.chat.admin.service;
 import com.joizhang.chat.admin.api.dto.AppSmsDTO;
 import com.joizhang.chat.common.core.util.R;
 
-/**
- *
- */
 public interface AppService {
 
     /**

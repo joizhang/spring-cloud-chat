@@ -24,8 +24,8 @@ import java.util.concurrent.TimeUnit;
  * 手机登录相关业务实现
  */
 @Slf4j
-@Service
 @AllArgsConstructor
+@Service
 public class AppServiceImpl implements AppService {
 
     private final RedisTemplate<String, Object> redisTemplate;
@@ -50,15 +50,16 @@ public class AppServiceImpl implements AppService {
         }
 
         // 校验手机号是否存在 sys_user 表
-        if (sms.getExist()
-                && !userMapper.exists(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getPhone, sms.getPhone()))) {
+        boolean exists = userMapper
+                .exists(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getPhone, sms.getPhone()));
+        if (sms.getExist() && !exists) {
             return R.ok(Boolean.FALSE, MsgUtils.getMessage(ErrorCodes.SYS_APP_PHONE_UNREGISTERED, sms.getPhone()));
         }
 
         String code = RandomUtil.randomNumbers(Integer.parseInt(SecurityConstants.CODE_SIZE));
         log.info("手机号生成验证码成功:{},{}", sms.getPhone(), code);
         redisTemplate.opsForValue().set(CacheConstants.DEFAULT_CODE_KEY + sms.getPhone(), code,
-                SecurityConstants.CODE_TIME, TimeUnit.SECONDS);
+                SecurityConstants.CODE_TIME * 5, TimeUnit.SECONDS);
 
         // 调用短信通道发送
         this.smsClient.sendCode(code, sms.getPhone());
@@ -70,16 +71,16 @@ public class AppServiceImpl implements AppService {
      *
      * @param phone 手机号
      * @param code  验证码
-     * @return
+     * @return 是否匹配
      */
     @Override
     public boolean check(String phone, String code) {
         Object codeObj = redisTemplate.opsForValue().get(CacheConstants.DEFAULT_CODE_KEY + phone);
 
         if (Objects.isNull(codeObj)) {
-            return false;
+            return true;
         }
-        return codeObj.equals(code);
+        return !codeObj.equals(code);
     }
 
 }
