@@ -9,6 +9,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
@@ -21,11 +22,20 @@ public class MyResourceServerConfiguration {
 
     protected final ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint;
 
+    /**
+     * security.oauth2.ignore.urls
+     */
     private final PermitAllUrlProperties permitAllUrl;
 
+    /**
+     * {@link MyBearerTokenResolver}
+     */
     private final MyBearerTokenResolver bearerTokenResolver;
 
-    private final OpaqueTokenIntrospector customOpaqueTokenIntrospector;
+    /**
+     * {@link MyCustomOpaqueTokenIntrospector}
+     */
+    private final OpaqueTokenIntrospector opaqueTokenIntrospector;
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -36,10 +46,12 @@ public class MyResourceServerConfiguration {
                         .anyRequest()
                         .authenticated()
                 )
-                .oauth2ResourceServer(oauth2 -> oauth2
+                .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
                         .authenticationEntryPoint(resourceAuthExceptionEntryPoint)
                         .bearerTokenResolver(bearerTokenResolver)
-                        .opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))
+                        .opaqueToken(opaqueTokenConfigurer -> opaqueTokenConfigurer
+                                .introspector(opaqueTokenIntrospector)
+                        )
                 )
                 .headers()
                 .frameOptions()

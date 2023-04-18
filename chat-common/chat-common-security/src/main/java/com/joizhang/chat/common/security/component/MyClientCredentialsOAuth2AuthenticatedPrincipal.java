@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * credential 支持客户端模式的用户存储
+ * credential 支持客户端模式的用户存储，用于{@link MyCustomOpaqueTokenIntrospector}
  */
 @RequiredArgsConstructor
 public class MyClientCredentialsOAuth2AuthenticatedPrincipal implements OAuth2AuthenticatedPrincipal {

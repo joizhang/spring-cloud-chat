@@ -19,6 +19,8 @@ import org.springframework.security.oauth2.server.authorization.context.Provider
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
+import org.springframework.security.oauth2.server.authorization.web.OAuth2ClientAuthenticationFilter;
+import org.springframework.security.oauth2.server.authorization.web.OAuth2TokenEndpointFilter;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
@@ -28,7 +30,13 @@ import java.util.*;
 import java.util.function.Supplier;
 
 /**
- * 处理自定义授权
+ * Token生成第二步：OAuth2 access_token的实现，{@link OAuth2TokenEndpointFilter}
+ * <p>
+ * 实现：
+ * <p>
+ * {@link com.joizhang.chat.auth.support.password.OAuth2ResourceOwnerPasswordAuthenticationProvider}
+ * <p>
+ * {@link com.joizhang.chat.auth.support.sms.OAuth2ResourceOwnerSmsAuthenticationProvider}
  */
 @Slf4j
 public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OAuth2ResourceOwnerBaseAuthenticationToken>
@@ -36,6 +44,9 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 
     private static final String ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.2.1";
 
+    /**
+     * {@link com.joizhang.chat.common.security.service.MyRedisOAuth2AuthorizationService}
+     */
     private final OAuth2AuthorizationService authorizationService;
 
     private final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
@@ -128,7 +139,6 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 
         Map<String, Object> reqParameters = resourceOwnerBaseAuthentication.getAdditionalParameters();
         try {
-
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = buildToken(reqParameters);
 
             log.debug("got usernamePasswordAuthenticationToken=" + usernamePasswordAuthenticationToken);
@@ -136,7 +146,6 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
             Authentication usernamePasswordAuthentication = authenticationManager
                     .authenticate(usernamePasswordAuthenticationToken);
 
-            // @formatter:off
             DefaultOAuth2TokenContext.Builder tokenContextBuilder = DefaultOAuth2TokenContext.builder()
                     .registeredClient(registeredClient)
                     .principal(usernamePasswordAuthentication)
@@ -144,7 +153,6 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
                     .authorizedScopes(authorizedScopes)
                     .authorizationGrantType(AuthorizationGrantType.PASSWORD)
                     .authorizationGrant(resourceOwnerBaseAuthentication);
-            // @formatter:on
 
             OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization
                     .withRegisteredClient(registeredClient)
@@ -166,9 +174,11 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
             if (generatedAccessToken instanceof ClaimAccessor) {
                 authorizationBuilder
                         .id(accessToken.getTokenValue())
-                        .token(accessToken,
-                                (metadata) -> metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME,
-                                ((ClaimAccessor) generatedAccessToken).getClaims())
+                        .token(accessToken, (metadata) ->
+                                metadata.put(
+                                        OAuth2Authorization.Token.CLAIMS_METADATA_NAME,
+                                        ((ClaimAccessor) generatedAccessToken).getClaims()
+                                )
                         )
                         .attribute(OAuth2Authorization.AUTHORIZED_SCOPE_ATTRIBUTE_NAME, authorizedScopes)
                         .attribute(Principal.class.getName(), usernamePasswordAuthentication);
@@ -181,7 +191,6 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
             if (registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.REFRESH_TOKEN) &&
                     // Do not issue refresh token to public client
                     !clientPrincipal.getClientAuthenticationMethod().equals(ClientAuthenticationMethod.NONE)) {
-
                 if (this.refreshTokenGenerator != null) {
                     Instant issuedAt = Instant.now();
                     Instant expiresAt = issuedAt.plus(registeredClient.getTokenSettings().getRefreshTokenTimeToLive());
@@ -198,21 +207,20 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
                 }
                 authorizationBuilder.refreshToken(refreshToken);
             }
-
             OAuth2Authorization authorization = authorizationBuilder.build();
-
             this.authorizationService.save(authorization);
-
             log.debug("returning OAuth2AccessTokenAuthenticationToken");
-
-            return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken,
-                    refreshToken, Objects.requireNonNull(authorization.getAccessToken().getClaims()));
-
+            return new OAuth2AccessTokenAuthenticationToken(
+                    registeredClient,
+                    clientPrincipal,
+                    accessToken,
+                    refreshToken,
+                    Objects.requireNonNull(authorization.getAccessToken().getClaims())
+            );
         } catch (Exception ex) {
             log.error("problem in authenticate", ex);
             throw oAuth2AuthenticationException(authentication, (AuthenticationException) ex);
         }
-
     }
 
     /**
@@ -312,20 +320,14 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
         return new OAuth2AuthenticationException(OAuth2ErrorCodesExpand.UN_KNOW_LOGIN_ERROR);
     }
 
-    private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(
-            Authentication authentication) {
-
+    private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(Authentication authentication) {
         OAuth2ClientAuthenticationToken clientPrincipal = null;
-
         if (OAuth2ClientAuthenticationToken.class.isAssignableFrom(authentication.getPrincipal().getClass())) {
             clientPrincipal = (OAuth2ClientAuthenticationToken) authentication.getPrincipal();
         }
-
         if (clientPrincipal != null && clientPrincipal.isAuthenticated()) {
             return clientPrincipal;
         }
-
         throw new OAuth2AuthenticationException(OAuth2ErrorCodes.INVALID_CLIENT);
     }
-
 }

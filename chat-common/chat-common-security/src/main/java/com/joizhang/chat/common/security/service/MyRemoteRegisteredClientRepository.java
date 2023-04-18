@@ -14,10 +14,12 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.OAuth2TokenFormat;
+import org.springframework.security.oauth2.server.authorization.authentication.ClientSecretAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.config.TokenSettings;
+import org.springframework.security.oauth2.server.authorization.web.OAuth2ClientAuthenticationFilter;
 import org.springframework.util.StringUtils;
 
 import java.time.Duration;
@@ -25,7 +27,8 @@ import java.util.Arrays;
 import java.util.Optional;
 
 /**
- * 查询客户端相关信息实现
+ * Token生成第一步：查询OAuth2客户端相关信息的实现，{@link OAuth2ClientAuthenticationFilter}
+ * {@link ClientSecretAuthenticationProvider}
  */
 @RequiredArgsConstructor
 public class MyRemoteRegisteredClientRepository implements RegisteredClientRepository {
@@ -79,8 +82,8 @@ public class MyRemoteRegisteredClientRepository implements RegisteredClientRepos
     @Cacheable(value = CacheConstants.CLIENT_DETAILS_KEY, key = "#clientId", unless = "#result == null")
     public RegisteredClient findByClientId(String clientId) {
         SysOauthClientDetails clientDetails = RetOps.of(clientDetailsService.getClientDetailsById(clientId))
-                .getData()
-                .orElseThrow(() -> new OAuthClientException("客户端查询异常，请检查数据库链接"));
+                        .getData()
+                        .orElseThrow(() -> new OAuthClientException("OAuth2客户端查询异常，请检查数据库链接"));
 
         RegisteredClient.Builder builder = RegisteredClient.withId(clientDetails.getClientId())
                 .clientId(clientDetails.getClientId())
