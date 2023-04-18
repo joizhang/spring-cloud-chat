@@ -25,9 +25,9 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class ImageCodeHandler implements HandlerFunction<ServerResponse> {
 
-    private static final Integer DEFAULT_IMAGE_WIDTH = 100;
+    private static final Integer DEFAULT_IMAGE_WIDTH = 150;
 
-    private static final Integer DEFAULT_IMAGE_HEIGHT = 40;
+    private static final Integer DEFAULT_IMAGE_HEIGHT = 56;
 
     private final RedisTemplate<String, Object> redisTemplate;
 
