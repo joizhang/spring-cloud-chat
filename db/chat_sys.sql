@@ -7,21 +7,19 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 USE `chat`;
 
--- ----------------------------
--- Table structure for sys_dept
--- ----------------------------
 DROP TABLE IF EXISTS `sys_dept` ;
+-- 创建表 `sys_dept`
 CREATE TABLE `sys_dept` (
-                            `dept_id` bigint NOT NULL,
-                            `name` varchar(50) COLLATE utf8_general_ci DEFAULT NULL COMMENT '部门名称',
-                            `sort_order` int NOT NULL DEFAULT '0' COMMENT '排序',
-                            `del_flag` char(1) COLLATE utf8_general_ci DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
-                            `parent_id` bigint DEFAULT NULL,
-                            `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                            `create_by` varchar(64) COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
-                            `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-                            `update_by` varchar(64) COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
-                            PRIMARY KEY (`dept_id`)
+	`dept_id` bigint NOT NULL COMMENT '部门ID',
+	`name` varchar(50) COLLATE utf8_general_ci DEFAULT NULL COMMENT '部门名称',
+	`sort_order` int NOT NULL DEFAULT '0' COMMENT '排序值',
+	`del_flag` char(1) COLLATE utf8_general_ci DEFAULT '0' COMMENT '删除标记  -1：已删除  0：正常',
+	`parent_id` bigint DEFAULT NULL COMMENT '父部门ID',
+	`create_time` datetime DEFAULT NULL COMMENT '创建时间',
+	`create_by` varchar(64) COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
+	`update_time` datetime DEFAULT NULL COMMENT '修改时间',
+	`update_by` varchar(64) COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
+	PRIMARY KEY (`dept_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC COMMENT='部门管理';
 
 -- ----------------------------
@@ -37,16 +35,14 @@ INSERT INTO `sys_dept` VALUES (6, '产品中心', 0, '0', 3, '2020-03-13 13:15:4
 INSERT INTO `sys_dept` VALUES (7, '测试中心', 0, '0', 3, '2020-03-13 13:16:02', ' ', '2021-12-31 06:59:56', ' ');
 COMMIT;
 
--- ----------------------------
--- Table structure for sys_dept_relation
--- ----------------------------
 DROP TABLE IF EXISTS `sys_dept_relation`;
+-- 创建表 `sys_dept_relation`
 CREATE TABLE `sys_dept_relation` (
-                                     `ancestor` bigint NOT NULL,
-                                     `descendant` bigint NOT NULL,
-                                     PRIMARY KEY (`ancestor`,`descendant`),
-                                     KEY `idx1` (`ancestor`),
-                                     KEY `idx2` (`descendant`)
+    `ancestor` bigint NOT NULL COMMENT '祖先节点',
+    `descendant` bigint NOT NULL COMMENT '后代节点',
+    PRIMARY KEY (`ancestor`,`descendant`),
+    KEY `idx1` (`ancestor`),
+    KEY `idx2` (`descendant`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC COMMENT='部门关系表';
 
 -- ----------------------------
@@ -76,18 +72,18 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dict`;
 CREATE TABLE `sys_dict` (
-                            `id` bigint NOT NULL,
-                            `dict_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '标识',
-                            `description` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '描述',
-                            `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
-                            `system_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '是否是系统内置',
-                            `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '删除标记',
-                            `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                            `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '创建人',
-                            `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '更新人',
-                            `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                            PRIMARY KEY (`id`) USING BTREE,
-                            KEY `sys_dict_del_flag` (`del_flag`) USING BTREE
+    `id` bigint NOT NULL,
+    `dict_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '标识',
+    `description` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '描述',
+    `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+    `system_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '是否是系统内置',
+    `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '删除标记',
+    `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+    `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '创建人',
+    `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '更新人',
+    `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE,
+    KEY `sys_dict_del_flag` (`del_flag`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='字典表';
 
 -- ----------------------------
@@ -110,24 +106,24 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dict_item`;
 CREATE TABLE `sys_dict_item` (
-                                 `id` bigint NOT NULL,
-                                 `dict_id` bigint NOT NULL COMMENT '字典ID',
-                                 `dict_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '字典标识',
-                                 `value` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '值',
-                                 `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '标签',
-                                 `type` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '字典类型',
-                                 `description` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '描述',
-                                 `sort_order` int NOT NULL DEFAULT '0' COMMENT '排序（升序）',
-                                 `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT ' ' COMMENT '备注',
-                                 `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '删除标记',
-                                 `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                                 `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '创建人',
-                                 `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '修改人',
-                                 `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                                 PRIMARY KEY (`id`) USING BTREE,
-                                 KEY `sys_dict_value` (`value`) USING BTREE,
-                                 KEY `sys_dict_label` (`label`) USING BTREE,
-                                 KEY `sys_dict_del_flag` (`del_flag`) USING BTREE
+    `id` bigint NOT NULL,
+    `dict_id` bigint NOT NULL COMMENT '字典ID',
+    `dict_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '字典标识',
+    `value` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '值',
+    `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '标签',
+    `type` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '字典类型',
+    `description` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '描述',
+    `sort_order` int NOT NULL DEFAULT '0' COMMENT '排序（升序）',
+    `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT ' ' COMMENT '备注',
+    `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '删除标记',
+    `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+    `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '创建人',
+    `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '修改人',
+    `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE,
+    KEY `sys_dict_value` (`value`) USING BTREE,
+    KEY `sys_dict_label` (`label`) USING BTREE,
+    KEY `sys_dict_del_flag` (`del_flag`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='字典项';
 
 -- ----------------------------
@@ -173,20 +169,21 @@ COMMIT;
 -- Table structure for sys_public_param
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_public_param`;
+-- 创建表 `sys_public_param`
 CREATE TABLE `sys_public_param`  (
-                                     `public_id` bigint(0) NOT NULL COMMENT '编号',
-                                     `public_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-                                     `public_key` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-                                     `public_value` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-                                     `status` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0',
-                                     `validate_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-                                     `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT '创建人',
-                                     `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT '修改人',
-                                     `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-                                     `update_time` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
-                                     `public_type` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0',
-                                     `system_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0',
-                                     PRIMARY KEY (`public_id`) USING BTREE
+    `public_id` bigint(0) NOT NULL COMMENT '编号',
+    `public_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数名称',
+    `public_key` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数键名',
+    `public_value` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数键值',
+    `status` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '状态，1-启用，0-禁用',
+    `validate_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '校验码',
+    `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT '创建人',
+    `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT '修改人',
+    `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+    `update_time` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
+    `public_type` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '参数类型，1-系统参数，2-业务参数',
+    `system_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '是否为系统内置参数，1-是，0-否',
+    PRIMARY KEY (`public_id`) USING BTREE
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_general_ci COMMENT = '公共参数配置表';
 
 -- ----------------------------
@@ -203,18 +200,18 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_file`;
 CREATE TABLE `sys_file` (
-                            `id` bigint NOT NULL,
-                            `file_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                            `bucket_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                            `original` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                            `type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                            `file_size` bigint DEFAULT NULL COMMENT '文件大小',
-                            `del_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '0' COMMENT '0-正常，1-删除',
-                            `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                            `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-                            `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建者',
-                            `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
-                            PRIMARY KEY (`id`) USING BTREE
+    `id` bigint NOT NULL COMMENT '文件ID',
+    `file_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件名称',
+    `bucket_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件存储桶名称',
+    `original` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '原始文件名',
+    `type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件类型',
+    `file_size` bigint DEFAULT NULL COMMENT '文件大小',
+    `del_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '0' COMMENT '删除标志：0-正常，1-删除',
+    `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+    `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+    `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建者',
+    `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
+    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='文件管理表';
 
 -- ----------------------------
@@ -228,27 +225,27 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_log`;
 CREATE TABLE `sys_log` (
-                           `id` bigint NOT NULL,
-                           `type` char(1) COLLATE utf8_general_ci DEFAULT '1' COMMENT '日志类型',
-                           `title` varchar(255) COLLATE utf8_general_ci DEFAULT '' COMMENT '日志标题',
-                           `service_id` varchar(32) COLLATE utf8_general_ci DEFAULT NULL COMMENT '服务ID',
-                           `remote_addr` varchar(255) COLLATE utf8_general_ci DEFAULT NULL COMMENT '操作IP地址',
-                           `user_agent` varchar(1000) COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户代理',
-                           `request_uri` varchar(255) COLLATE utf8_general_ci DEFAULT NULL COMMENT '请求URI',
-                           `method` varchar(10) COLLATE utf8_general_ci DEFAULT NULL COMMENT '操作方式',
-                           `params` text COLLATE utf8_general_ci COMMENT '操作提交的数据',
-                           `time` bigint DEFAULT NULL COMMENT '执行时间',
-                           `del_flag` char(1) COLLATE utf8_general_ci DEFAULT '0' COMMENT '删除标记',
-                           `exception` text COLLATE utf8_general_ci COMMENT '异常信息',
-                           `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                           `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                           `create_by` varchar(64) COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
-                           `update_by` varchar(64) COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
-                           PRIMARY KEY (`id`),
-                           KEY `sys_log_create_by` (`create_by`),
-                           KEY `sys_log_request_uri` (`request_uri`),
-                           KEY `sys_log_type` (`type`),
-                           KEY `sys_log_create_date` (`create_time`)
+   `id` bigint NOT NULL,
+   `type` char(1) COLLATE utf8_general_ci DEFAULT '1' COMMENT '日志类型',
+   `title` varchar(255) COLLATE utf8_general_ci DEFAULT '' COMMENT '日志标题',
+   `service_id` varchar(32) COLLATE utf8_general_ci DEFAULT NULL COMMENT '服务ID',
+   `remote_addr` varchar(255) COLLATE utf8_general_ci DEFAULT NULL COMMENT '操作IP地址',
+   `user_agent` varchar(1000) COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户代理',
+   `request_uri` varchar(255) COLLATE utf8_general_ci DEFAULT NULL COMMENT '请求URI',
+   `method` varchar(10) COLLATE utf8_general_ci DEFAULT NULL COMMENT '操作方式',
+   `params` text COLLATE utf8_general_ci COMMENT '操作提交的数据',
+   `time` bigint DEFAULT NULL COMMENT '执行时间',
+   `del_flag` char(1) COLLATE utf8_general_ci DEFAULT '0' COMMENT '删除标记',
+   `exception` text COLLATE utf8_general_ci COMMENT '异常信息',
+   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+   `create_by` varchar(64) COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
+   `update_by` varchar(64) COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
+   PRIMARY KEY (`id`),
+   KEY `sys_log_create_by` (`create_by`),
+   KEY `sys_log_request_uri` (`request_uri`),
+   KEY `sys_log_type` (`type`),
+   KEY `sys_log_create_date` (`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC COMMENT='日志表';
 
 -- ----------------------------
@@ -262,21 +259,21 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu` (
-                            `menu_id` bigint NOT NULL,
-                            `name` varchar(32) COLLATE utf8_general_ci NOT NULL COMMENT '菜单名称',
-                            `permission` varchar(32) COLLATE utf8_general_ci DEFAULT NULL COMMENT '菜单权限标识',
-                            `path` varchar(128) COLLATE utf8_general_ci DEFAULT NULL COMMENT '前端URL',
-                            `parent_id` bigint DEFAULT NULL COMMENT '父菜单ID',
-                            `icon` varchar(32) COLLATE utf8_general_ci DEFAULT NULL COMMENT '图标',
-                            `sort_order` int NOT NULL DEFAULT '0' COMMENT '排序值',
-                            `keep_alive` char(1) COLLATE utf8_general_ci DEFAULT '0' COMMENT '0-开启，1- 关闭',
-                            `type` char(1) COLLATE utf8_general_ci DEFAULT NULL COMMENT '菜单类型 （0菜单 1按钮）',
-                            `del_flag` char(1) COLLATE utf8_general_ci DEFAULT '0' COMMENT '逻辑删除标记(0--正常 1--删除)',
-                            `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
-                            `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                            `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '修改人',
-                            `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                            PRIMARY KEY (`menu_id`)
+    `menu_id` bigint NOT NULL,
+    `name` varchar(32) COLLATE utf8_general_ci NOT NULL COMMENT '菜单名称',
+    `permission` varchar(32) COLLATE utf8_general_ci DEFAULT NULL COMMENT '菜单权限标识',
+    `path` varchar(128) COLLATE utf8_general_ci DEFAULT NULL COMMENT '前端URL',
+    `parent_id` bigint DEFAULT NULL COMMENT '父菜单ID',
+    `icon` varchar(32) COLLATE utf8_general_ci DEFAULT NULL COMMENT '图标',
+    `sort_order` int NOT NULL DEFAULT '0' COMMENT '排序值',
+    `keep_alive` char(1) COLLATE utf8_general_ci DEFAULT '0' COMMENT '0-开启，1- 关闭',
+    `type` char(1) COLLATE utf8_general_ci DEFAULT NULL COMMENT '菜单类型 （0菜单 1按钮）',
+    `del_flag` char(1) COLLATE utf8_general_ci DEFAULT '0' COMMENT '逻辑删除标记(0--正常 1--删除)',
+    `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
+    `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+    `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '修改人',
+    `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+    PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC COMMENT='菜单权限表';
 
 -- ----------------------------
@@ -348,22 +345,22 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_oauth_client_details`;
 CREATE TABLE `sys_oauth_client_details` (
-                                            `client_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '客户端ID',
-                                            `resource_ids` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '资源列表',
-                                            `client_secret` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '客户端密钥',
-                                            `scope` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '域',
-                                            `authorized_grant_types` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '认证类型',
-                                            `web_server_redirect_uri` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '重定向地址',
-                                            `authorities` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '角色列表',
-                                            `access_token_validity` int DEFAULT NULL COMMENT 'token 有效期',
-                                            `refresh_token_validity` int DEFAULT NULL COMMENT '刷新令牌有效期',
-                                            `additional_information` varchar(4096) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '令牌扩展字段JSON',
-                                            `autoapprove` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '是否自动放行',
-                                            `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                                            `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                                            `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
-                                            `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
-                                            PRIMARY KEY (`client_id`)
+    `client_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '客户端ID',
+    `resource_ids` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '资源列表',
+    `client_secret` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '客户端密钥',
+    `scope` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '域',
+    `authorized_grant_types` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '认证类型',
+    `web_server_redirect_uri` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '重定向地址',
+    `authorities` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '角色列表',
+    `access_token_validity` int DEFAULT NULL COMMENT 'token 有效期',
+    `refresh_token_validity` int DEFAULT NULL COMMENT '刷新令牌有效期',
+    `additional_information` varchar(4096) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '令牌扩展字段JSON',
+    `autoapprove` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '是否自动放行',
+    `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+    `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+    `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
+    `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
+    PRIMARY KEY (`client_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC COMMENT='终端信息表';
 
 -- ----------------------------
@@ -385,17 +382,17 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_post`;
 CREATE TABLE `sys_post`  (
-                             `post_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
-                             `post_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '岗位编码',
-                             `post_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '岗位名称',
-                             `post_sort` int(0) NOT NULL COMMENT '岗位排序',
-                             `del_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
-                             `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-                             `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '创建人',
-                             `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-                             `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '更新人',
-                             `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注信息',
-                             PRIMARY KEY (`post_id`) USING BTREE
+     `post_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
+     `post_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '岗位编码',
+     `post_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '岗位名称',
+     `post_sort` int(0) NOT NULL COMMENT '岗位排序',
+     `del_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
+     `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+     `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '创建人',
+     `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+     `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '更新人',
+     `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注信息',
+     PRIMARY KEY (`post_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC COMMENT = '岗位信息表';
 
 -- ----------------------------
@@ -412,9 +409,9 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_post`;
 CREATE TABLE `sys_user_post`  (
-                                  `user_id` bigint(0) NOT NULL COMMENT '用户ID',
-                                  `post_id` bigint(0) NOT NULL COMMENT '岗位ID',
-                                  PRIMARY KEY (`user_id`, `post_id`) USING BTREE
+    `user_id` bigint(0) NOT NULL COMMENT '用户ID',
+    `post_id` bigint(0) NOT NULL COMMENT '岗位ID',
+    PRIMARY KEY (`user_id`, `post_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC COMMENT = '用户与岗位关联表';
 
 -- ----------------------------
@@ -429,17 +426,17 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role` (
-                            `role_id` bigint NOT NULL,
-                            `role_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-                            `role_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-                            `role_desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                            `del_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '0' COMMENT '删除标识（0-正常,1-删除）',
-                            `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                            `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-                            `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '修改人',
-                            `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
-                            PRIMARY KEY (`role_id`),
-                            UNIQUE KEY `role_idx1_role_code` (`role_code`)
+    `role_id` bigint NOT NULL COMMENT '角色ID',
+    `role_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色名称',
+    `role_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色代码',
+    `role_desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '角色描述',
+    `del_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '0' COMMENT '删除标识：0-正常，1-删除',
+    `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+    `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+    `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '修改人',
+    `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
+    PRIMARY KEY (`role_id`),
+    UNIQUE KEY `role_idx1_role_code` (`role_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC COMMENT='系统角色表';
 
 -- ----------------------------
@@ -455,9 +452,9 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role_menu`;
 CREATE TABLE `sys_role_menu` (
-                                 `role_id` bigint NOT NULL,
-                                 `menu_id` bigint NOT NULL,
-                                 PRIMARY KEY (`role_id`,`menu_id`)
+    `role_id` bigint NOT NULL COMMENT '角色ID',
+    `menu_id` bigint NOT NULL COMMENT '菜单ID',
+    PRIMARY KEY (`role_id`,`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC COMMENT='角色菜单表';
 
 -- ----------------------------
@@ -531,21 +528,21 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
-                            `user_id` bigint NOT NULL,
-                            `username` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
-                            `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
-                            `salt` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '随机盐',
-                            `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '简介',
-                            `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '头像',
-                            `dept_id` bigint DEFAULT NULL COMMENT '部门ID',
-                            `lock_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '0' COMMENT '0-正常，9-锁定',
-                            `del_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '0' COMMENT '0-正常，1-删除',
-                            `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                            `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-                            `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建者',
-                            `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
-                            PRIMARY KEY (`user_id`),
-                            KEY `user_idx1_username` (`username`)
+    `user_id` bigint NOT NULL,
+    `username` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
+    `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
+    `salt` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '随机盐',
+    `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '简介',
+    `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '头像',
+    `dept_id` bigint DEFAULT NULL COMMENT '部门ID',
+    `lock_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '0' COMMENT '0-正常，9-锁定',
+    `del_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '0' COMMENT '0-正常，1-删除',
+    `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+    `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+    `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建者',
+    `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
+    PRIMARY KEY (`user_id`),
+    KEY `user_idx1_username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户表';
 
 -- ----------------------------
@@ -560,9 +557,9 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE `sys_user_role` (
-                                 `user_id` bigint NOT NULL,
-                                 `role_id` bigint NOT NULL,
-                                 PRIMARY KEY (`user_id`,`role_id`)
+    `user_id` bigint NOT NULL COMMENT '用户ID',
+    `role_id` bigint NOT NULL COMMENT '角色ID',
+    PRIMARY KEY (`user_id`,`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户角色表';
 
 -- ----------------------------
