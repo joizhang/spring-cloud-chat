@@ -90,7 +90,11 @@ public class MyRemoteRegisteredClientRepository implements RegisteredClientRepos
         RegisteredClient.Builder builder = RegisteredClient.withId(clientDetails.getClientId())
                 .clientId(clientDetails.getClientId())
                 .clientSecret(SecurityConstants.NOOP + clientDetails.getClientSecret())
-                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC);
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
+                .clientAuthenticationMethods(clientAuthenticationMethods -> {
+                    clientAuthenticationMethods.add(ClientAuthenticationMethod.CLIENT_SECRET_BASIC);
+                    clientAuthenticationMethods.add(ClientAuthenticationMethod.CLIENT_SECRET_POST);
+                });
 
         // 授权模式
         Optional.ofNullable(clientDetails.getAuthorizedGrantTypes())
