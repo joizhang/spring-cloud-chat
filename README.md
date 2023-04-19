@@ -9,14 +9,14 @@
 
 ### 核心依赖
 
-| 依赖                     | 版本         |
-|------------------------|------------|
-| Spring Boot            | 2.7.5      |
-| Spring Cloud           | 2021.0.5   |
-| Spring Cloud Alibaba   | 2021.0.4.0 |
-| Spring Security OAuth2 | 2.3.6      |
-| Mybatis Plus           | 3.5.3.1    |
-| hutool                 | 5.8.16     |
+| 依赖                          | 版本         |
+|-----------------------------|------------|
+| Spring Boot                 | 2.7.5      |
+| Spring Cloud                | 2021.0.5   |
+| Spring Cloud Alibaba        | 2021.0.4.0 |
+| Spring Authorization Server | 0.4.0      |
+| Mybatis Plus                | 3.5.3.1    |
+| hutool                      | 5.8.16     |
 
 ### 模块说明
 

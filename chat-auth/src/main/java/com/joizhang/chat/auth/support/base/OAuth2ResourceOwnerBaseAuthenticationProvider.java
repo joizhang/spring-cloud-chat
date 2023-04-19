@@ -12,14 +12,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.*;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AccessTokenAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2ClientAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
-import org.springframework.security.oauth2.server.authorization.context.ProviderContextHolder;
+import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
-import org.springframework.security.oauth2.server.authorization.web.OAuth2ClientAuthenticationFilter;
 import org.springframework.security.oauth2.server.authorization.web.OAuth2TokenEndpointFilter;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -149,7 +149,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
             DefaultOAuth2TokenContext.Builder tokenContextBuilder = DefaultOAuth2TokenContext.builder()
                     .registeredClient(registeredClient)
                     .principal(usernamePasswordAuthentication)
-                    .providerContext(ProviderContextHolder.getProviderContext())
+                    .authorizationServerContext(AuthorizationServerContextHolder.getContext())
                     .authorizedScopes(authorizedScopes)
                     .authorizationGrantType(AuthorizationGrantType.PASSWORD)
                     .authorizationGrant(resourceOwnerBaseAuthentication);
@@ -158,7 +158,8 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
                     .withRegisteredClient(registeredClient)
                     .principalName(usernamePasswordAuthentication.getName())
                     .authorizationGrantType(AuthorizationGrantType.PASSWORD)
-                    .attribute(OAuth2Authorization.AUTHORIZED_SCOPE_ATTRIBUTE_NAME, authorizedScopes);
+                    // 0.4.0 新增的方法
+                    .authorizedScopes(authorizedScopes);
 
             // ----- Access token -----
             OAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.ACCESS_TOKEN).build();
@@ -180,7 +181,8 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
                                         ((ClaimAccessor) generatedAccessToken).getClaims()
                                 )
                         )
-                        .attribute(OAuth2Authorization.AUTHORIZED_SCOPE_ATTRIBUTE_NAME, authorizedScopes)
+                        // 0.4.0 新增的方法
+                        .authorizedScopes(authorizedScopes)
                         .attribute(Principal.class.getName(), usernamePasswordAuthentication);
             } else {
                 authorizationBuilder.id(accessToken.getTokenValue()).accessToken(accessToken);

@@ -27,7 +27,7 @@
         <spring-boot.version>2.7.5</spring-boot.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
-        <spring.authorization.version>0.3.1</spring.authorization.version>
+        <spring.authorization.version>0.4.0</spring.authorization.version>
         <spring-boot-admin.version>2.7.7</spring-boot-admin.version>
 
         <jasypt.version>2.1.0</jasypt.version>
