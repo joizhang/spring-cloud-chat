@@ -1,2 +1,3 @@
 com.joizhang.chat.common.feign.MyFeignAutoConfiguration
+com.joizhang.chat.common.feign.MyFeignRetryAutoConfiguration
 com.joizhang.chat.common.feign.sentinel.handle.GlobalBizExceptionHandler
