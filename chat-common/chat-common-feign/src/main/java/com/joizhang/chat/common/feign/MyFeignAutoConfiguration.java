@@ -4,6 +4,7 @@ import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.RequestOriginParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.joizhang.chat.common.feign.retry.FeignRetryAspect;
 import com.joizhang.chat.common.feign.sentinel.ext.MySentinelFeign;
 import com.joizhang.chat.common.feign.sentinel.handle.MyBlockExceptionHandler;
 import com.joizhang.chat.common.feign.sentinel.parser.MyHeaderRequestOriginParser;
@@ -40,5 +41,10 @@ public class MyFeignAutoConfiguration {
     @ConditionalOnMissingBean
     public RequestOriginParser requestOriginParser() {
         return new MyHeaderRequestOriginParser();
+    }
+
+    @Bean
+    public FeignRetryAspect feignRetryAspect() {
+        return new FeignRetryAspect();
     }
 }

@@ -36,7 +36,7 @@ public class MyRedisOAuth2AuthorizationService implements OAuth2AuthorizationSer
         Assert.notNull(authorization, "authorization cannot be null");
 
         if (isState(authorization)) {
-            String token = authorization.getAttribute("state");
+            String token = authorization.getAttribute(OAuth2ParameterNames.STATE);
             redisTemplate.setValueSerializer(RedisSerializer.java());
             String key = buildKey(OAuth2ParameterNames.STATE, token);
             redisTemplate.opsForValue().set(key, authorization, TIMEOUT, TimeUnit.MINUTES);
@@ -78,7 +78,7 @@ public class MyRedisOAuth2AuthorizationService implements OAuth2AuthorizationSer
 
         List<String> keys = new ArrayList<>();
         if (isState(authorization)) {
-            String token = authorization.getAttribute("state");
+            String token = authorization.getAttribute(OAuth2ParameterNames.STATE);
             keys.add(buildKey(OAuth2ParameterNames.STATE, token));
         }
 
@@ -122,7 +122,7 @@ public class MyRedisOAuth2AuthorizationService implements OAuth2AuthorizationSer
     }
 
     private static boolean isState(OAuth2Authorization authorization) {
-        return Objects.nonNull(authorization.getAttribute("state"));
+        return Objects.nonNull(authorization.getAttribute(OAuth2ParameterNames.STATE));
     }
 
     private static boolean isCode(OAuth2Authorization authorization) {
