@@ -1,7 +1,7 @@
 package com.joizhang.chat.common.security.component;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.joizhang.chat.common.core.constant.SecurityConstants;
 import com.joizhang.chat.common.core.util.WebUtils;
 import feign.RequestInterceptor;
@@ -50,7 +50,7 @@ public class MyOAuthRequestInterceptor implements RequestInterceptor {
         HttpServletRequest request = WebUtils.getRequest().get();
         // 避免请求参数的 query token 无法传递
         String token = tokenResolver.resolve(request);
-        if (StrUtil.isBlank(token)) {
+        if (StringUtils.isBlank(token)) {
             return;
         }
         String value = String.format("%s %s", OAuth2AccessToken.TokenType.BEARER.getValue(), token);
