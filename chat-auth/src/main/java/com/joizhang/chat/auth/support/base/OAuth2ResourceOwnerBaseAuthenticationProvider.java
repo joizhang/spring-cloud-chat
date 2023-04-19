@@ -220,7 +220,6 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
                     Objects.requireNonNull(authorization.getAccessToken().getClaims())
             );
         } catch (Exception ex) {
-            log.error("problem in authenticate", ex);
             throw oAuth2AuthenticationException(authentication, (AuthenticationException) ex);
         }
     }
