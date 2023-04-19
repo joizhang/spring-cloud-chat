@@ -318,7 +318,12 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
                     )
             );
         }
-        return new OAuth2AuthenticationException(OAuth2ErrorCodesExpand.UN_KNOW_LOGIN_ERROR);
+        log.error(authenticationException.getLocalizedMessage());
+        return new OAuth2AuthenticationException(
+                new OAuth2Error(OAuth2ErrorCodes.SERVER_ERROR),
+                authenticationException.getLocalizedMessage(),
+                authenticationException
+        );
     }
 
     private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(Authentication authentication) {
