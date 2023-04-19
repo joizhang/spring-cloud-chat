@@ -3,6 +3,8 @@ package com.joizhang.chat.auth.support.handler;
 import cn.hutool.core.util.StrUtil;
 import com.joizhang.chat.admin.api.entity.SysLog;
 import com.joizhang.chat.common.core.constant.CommonConstants;
+import com.joizhang.chat.common.core.constant.SecurityConstants;
+import com.joizhang.chat.common.core.util.MsgUtils;
 import com.joizhang.chat.common.core.util.R;
 import com.joizhang.chat.common.core.util.SpringContextHolder;
 import com.joizhang.chat.common.log.event.SysLogEvent;
@@ -62,15 +64,25 @@ public class MyAuthenticationFailureEventHandler implements AuthenticationFailur
         logVo.setUpdateBy(username);
         SpringContextHolder.publishEvent(new SysLogEvent(logVo));
         // 写出错误信息
-        sendErrorResponse(response, exception);
+        sendErrorResponse(request, response, exception);
     }
 
-    private void sendErrorResponse(HttpServletResponse response,
+    private void sendErrorResponse(HttpServletRequest request,
+                                   HttpServletResponse response,
                                    AuthenticationException exception) throws IOException {
         ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
         httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
+        String errorMessage;
+        // 手机号登录
+        String grantType = request.getParameter(OAuth2ParameterNames.GRANT_TYPE);
+        if (SecurityConstants.APP.equals(grantType)) {
+            errorMessage = MsgUtils.getSecurityMessage(
+                    "AbstractUserDetailsAuthenticationProvider.smsBadCredentials");
+        } else {
+            errorMessage = exception.getLocalizedMessage();
+        }
         this.errorHttpResponseConverter.write(
-                R.failed(exception.getLocalizedMessage()),
+                R.failed(errorMessage),
                 MediaType.APPLICATION_JSON,
                 httpResponse
         );
