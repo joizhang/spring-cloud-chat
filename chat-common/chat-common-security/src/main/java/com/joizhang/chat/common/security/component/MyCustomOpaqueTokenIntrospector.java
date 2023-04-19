@@ -1,6 +1,7 @@
 package com.joizhang.chat.common.security.component;
 
 import cn.hutool.extra.spring.SpringUtil;
+import com.joizhang.chat.common.core.constant.SecurityConstants;
 import com.joizhang.chat.common.security.service.MyUser;
 import com.joizhang.chat.common.security.service.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -72,6 +73,12 @@ public class MyCustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector 
         } catch (Exception ex) {
             log.error("资源服务器 introspect Token error {}", ex.getLocalizedMessage());
         }
-        return (MyUser) userDetails;
+
+        // 注入扩展属性,方便上下文获取客户端ID
+        MyUser user = (MyUser) userDetails;
+        Objects.requireNonNull(user)
+                .getAttributes()
+                .put(SecurityConstants.CLIENT_ID, oldAuthorization.getRegisteredClientId());
+        return user;
     }
 }

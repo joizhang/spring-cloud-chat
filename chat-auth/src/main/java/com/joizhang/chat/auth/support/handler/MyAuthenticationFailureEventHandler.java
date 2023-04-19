@@ -7,6 +7,7 @@ import com.joizhang.chat.common.core.constant.SecurityConstants;
 import com.joizhang.chat.common.core.util.MsgUtils;
 import com.joizhang.chat.common.core.util.R;
 import com.joizhang.chat.common.core.util.SpringContextHolder;
+import com.joizhang.chat.common.core.util.WebUtils;
 import com.joizhang.chat.common.log.event.SysLogEvent;
 import com.joizhang.chat.common.log.util.LogTypeEnum;
 import com.joizhang.chat.common.log.util.SysLogUtils;
@@ -61,6 +62,7 @@ public class MyAuthenticationFailureEventHandler implements AuthenticationFailur
             Long endTime = System.currentTimeMillis();
             logVo.setTime(endTime - startTime);
         }
+        logVo.setServiceId(WebUtils.getClientId());
         logVo.setCreateBy(username);
         logVo.setUpdateBy(username);
         SpringContextHolder.publishEvent(new SysLogEvent(logVo));

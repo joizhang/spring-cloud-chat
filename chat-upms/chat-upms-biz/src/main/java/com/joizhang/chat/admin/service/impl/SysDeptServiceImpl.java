@@ -13,7 +13,6 @@ import com.joizhang.chat.admin.service.SysDeptRelationService;
 import com.joizhang.chat.admin.service.SysDeptService;
 import com.joizhang.chat.common.security.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,10 +39,8 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean saveDept(SysDept dept) {
-        SysDept sysDept = new SysDept();
-        BeanUtils.copyProperties(dept, sysDept);
-        this.save(sysDept);
-        sysDeptRelationService.saveDeptRelation(sysDept);
+        this.save(dept);
+        sysDeptRelationService.saveDeptRelation(dept);
         return Boolean.TRUE;
     }
 
