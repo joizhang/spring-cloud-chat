@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 /**
  * 服务安全相关配置
  */
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class WebSecurityConfiguration {
 
     /**
