@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/register")
 @ConditionalOnProperty(name = "register.user", matchIfMissing = true)
-public class RegisterController {
+public class SysRegisterController {
 
     private final SysUserService userService;
 

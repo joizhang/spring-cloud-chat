@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("/dept")
 @Tag(name = "部门管理模块")
 @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
-public class DeptController {
+public class SysDeptController {
 
     private final SysDeptService sysDeptService;
 

@@ -28,7 +28,7 @@ import java.util.List;
 @RequestMapping("/role")
 @Tag(name = "角色管理模块")
 @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
-public class RoleController {
+public class SysRoleController {
 
     private final SysRoleService sysRoleService;
 
