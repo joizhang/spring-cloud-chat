@@ -108,8 +108,8 @@ public class UserController {
      * @return if exists return true
      */
     @Inner(false)
-    @GetMapping("/check/exsit")
-    public R<Boolean> isExsit(UserDTO userDTO) {
+    @GetMapping("/check/exist")
+    public R<Boolean> isExist(UserDTO userDTO) {
         List<SysUser> sysUserList = userService.list(new QueryWrapper<>(userDTO));
         if (CollUtil.isNotEmpty(sysUserList)) {
             return R.ok(Boolean.TRUE, MsgUtils.getMessage(ErrorCodes.SYS_USER_EXISTING));
