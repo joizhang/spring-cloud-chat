@@ -1,4 +1,4 @@
-package com.joizhang.chat.common.security.feign;
+package com.joizhang.chat.common.security.component;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;

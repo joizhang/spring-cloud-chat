@@ -2,7 +2,6 @@ package com.joizhang.chat.common.security.annotation;
 
 import com.joizhang.chat.common.security.component.MyResourceServerAutoConfiguration;
 import com.joizhang.chat.common.security.component.MyResourceServerConfiguration;
-import com.joizhang.chat.common.security.feign.MyFeignClientConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
@@ -19,7 +18,6 @@ import java.lang.annotation.*;
 @Import({
         MyResourceServerAutoConfiguration.class,
         MyResourceServerConfiguration.class,
-        MyFeignClientConfiguration.class
 })
 public @interface EnableResourceServer {
 }
