@@ -11,7 +11,7 @@
 
 | 依赖                          | 版本         |
 |-----------------------------|------------|
-| Spring Boot                 | 2.7.8      |
+| Spring Boot                 | 2.7.9      |
 | Spring Cloud                | 2021.0.5   |
 | Spring Cloud Alibaba        | 2021.0.4.0 |
 | Spring Authorization Server | 0.4.1      |
