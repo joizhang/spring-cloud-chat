@@ -13,31 +13,26 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
- * 聊天消息
+ * 朋友请求表
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ChatMessage extends BaseEntity {
-
-    private static final long serialVersionUID = 1L;
+public class ChatFriendRequest extends BaseEntity {
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    @Schema(description = "主键id")
+    @Schema(description = "朋友请求编号")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
-    @NotNull(message = "发送者不能为空")
-    @Schema(description = "发送者ID")
+    @NotNull
+    @Schema(description = "好友请求发送着")
     private Long senderId;
 
-    @NotNull(message = "接收者不能为空")
-    @Schema(description = "接收者ID")
+    @NotNull
+    @Schema(description = "好友请求接受者")
     private Long receiverId;
 
-    @NotBlank(message = "内容不能为空")
-    @Schema(description = "消息内容")
-    private String content;
-
-    @NotNull(message = "消息类型不能为空")
-    @Schema(description = "消息类型：1-text, 2-emoji, 3-image, 4-audio, 5-video")
-    private Integer contentType;
+    @NotNull
+    @Schema(description = "好友请求状态：1-PENDING, 2-ACCEPTED, 3-DECLINED")
+    private Integer status;
 }

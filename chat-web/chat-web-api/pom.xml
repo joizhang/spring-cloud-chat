@@ -13,12 +13,16 @@
     <description>聊天服务公共api模块</description>
 
     <dependencies>
-        <!--upms api、model 模块-->
+        <!--core 工具类-->
         <dependency>
             <groupId>com.joizhang</groupId>
-            <artifactId>chat-upms-api</artifactId>
+            <artifactId>chat-common-core</artifactId>
         </dependency>
-        <!--swagger-->
+        <!--mybatis 依赖-->
+        <dependency>
+            <groupId>com.joizhang</groupId>
+            <artifactId>chat-common-mybatis</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>

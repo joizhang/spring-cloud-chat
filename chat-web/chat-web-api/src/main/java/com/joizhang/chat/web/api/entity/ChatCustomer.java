@@ -21,9 +21,9 @@ public class ChatCustomer extends BaseEntity {
     /**
      * 主键ID
      */
-    @TableId(value = "user_id", type = IdType.ASSIGN_ID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     @Schema(description = "主键id")
-    private Long userId;
+    private Long id;
 
     /**
      * 用户名
@@ -67,5 +67,4 @@ public class ChatCustomer extends BaseEntity {
      */
     @TableLogic
     private String delFlag;
-
 }
