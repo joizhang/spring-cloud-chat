@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/customer")
 @Tag(name = "聊天用户模块")
 @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
-public class CustomerController {
+public class ChatCustomerController {
 
     private final ChatCustomerService customerService;
 

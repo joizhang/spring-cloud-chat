@@ -1,28 +1,76 @@
 package com.joizhang.chat.web.config;
 
+import com.joizhang.chat.web.handler.CustomPlainTextMessageHandler;
+import com.joizhang.chat.web.handler.CustomWebSocketHandler;
+import com.joizhang.chat.web.handler.PlainTextMessageHandler;
+import com.joizhang.chat.web.handler.MapSessionWebSocketHandlerDecorator;
+import com.joizhang.chat.web.handler.SecuritySessionKeyGenerator;
+import com.joizhang.chat.web.handler.SessionKeyGenerator;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
-import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.lang.NonNull;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.springframework.web.socket.server.HandshakeInterceptor;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 @Configuration
-@EnableWebSocketMessageBroker
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+@EnableWebSocket
+@EnableConfigurationProperties({WebSocketProperties.class})
+public class WebSocketConfig {
 
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry registry) {
-        // 设置一个或者多个代理前缀，在 Controller 类中的方法里面发生的消息，会首先转发到代理从而发送到对应广播或者队列中
-        registry.enableSimpleBroker("/topic");
-        // 配置客户端发送请求消息的一个或多个前缀，该前缀会筛选消息目标转发到 Controller 类中注解对应的方法里
-        registry.setApplicationDestinationPrefixes("/app");
-        // 服务端通知特定用户客户端的前缀，可以不设置，默认为user
-        registry.setUserDestinationPrefix("/user");
+    private final WebSocketProperties webSocketProperties;
+
+    @Bean
+    @ConditionalOnMissingBean({SessionKeyGenerator.class})
+    public SessionKeyGenerator sessionKeyGenerator() {
+        return new SecuritySessionKeyGenerator();
     }
 
-    @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // 配置 WebSocket 进入点，及开启使用 SockJS，这些配置主要用配置连接端点，用于 WebSocket 连接
-        registry.addEndpoint("/gs-guide-websocket").withSockJS();
+    @Bean
+    @ConditionalOnMissingBean({HandshakeInterceptor.class})
+    public HandshakeInterceptor handshakeInterceptor() {
+        return new UserAttributeHandshakeInterceptor();
     }
+
+    @Bean
+    @ConditionalOnMissingBean({PlainTextMessageHandler.class})
+    public PlainTextMessageHandler planTextMessageHandler() {
+        return new CustomPlainTextMessageHandler();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean({TextWebSocketHandler.class, PlainTextMessageHandler.class})
+    public WebSocketHandler webSocketHandler(@Autowired(required = false) SessionKeyGenerator sessionKeyGenerator) {
+        CustomWebSocketHandler customWebSocketHandler = new CustomWebSocketHandler();
+        if (this.webSocketProperties.isMapSession()) {
+            return new MapSessionWebSocketHandlerDecorator(customWebSocketHandler, sessionKeyGenerator);
+        }
+        return customWebSocketHandler;
+    }
+
+
+    @Bean
+    @ConditionalOnMissingBean
+    public WebSocketConfigurer webSocketConfigurer(List<HandshakeInterceptor> handshakeInterceptor,
+                                                   WebSocketHandler webSocketHandler) {
+        return new WebSocketConfigurer() {
+            @Override
+            public void registerWebSocketHandlers(@NonNull WebSocketHandlerRegistry registry) {
+                registry.addHandler(webSocketHandler, webSocketProperties.getPath())
+                        .addInterceptors(handshakeInterceptor.toArray(new HandshakeInterceptor[0]))
+                        .setAllowedOrigins(webSocketProperties.getAllowOrigins());
+            }
+        };
+    }
+
 }
