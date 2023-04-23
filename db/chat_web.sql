@@ -39,6 +39,10 @@ CREATE TABLE `chat_message` (
     `receiver_id` bigint NOT NULL COMMENT '接收者ID',
     `content` varchar(5000) NOT NULL COMMENT '消息内容',
     `content_type` int NOT NULL COMMENT '消息类型：1-text, 2-emoji, 3-image, 4-audio, 5-video',
+    `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+    `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+    `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
+    `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
     PRIMARY KEY (`id`),
     KEY `message_idx1_from_to` (`sender_id`, `receiver_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='聊天消息表';
