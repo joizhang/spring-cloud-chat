@@ -59,7 +59,7 @@ public class MyCustomerUserDetailsServiceImpl implements MyUserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
         ChatCustomer chatCustomer = info.getChatCustomer();
         UserDetails userDetails = new MyUser(
-                chatCustomer.getUserId(),
+                chatCustomer.getId(),
                 0L,
                 chatCustomer.getUsername(),
                 SecurityConstants.BCRYPT + chatCustomer.getPassword(),
