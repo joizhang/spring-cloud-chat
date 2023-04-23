@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/svc/customer")
 @Tag(name = "聊天用户模块")
 @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class ChatCustomerController {

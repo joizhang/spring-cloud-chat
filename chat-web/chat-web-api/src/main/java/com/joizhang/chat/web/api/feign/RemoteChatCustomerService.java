@@ -20,7 +20,7 @@ public interface RemoteChatCustomerService {
      * @param username 用户名
      * @return R
      */
-    @GetMapping(value = "/customer/info/{username}", headers = SecurityConstants.HEADER_FROM_IN)
+    @GetMapping(value = "/svc/customer/info/{username}", headers = SecurityConstants.HEADER_FROM_IN)
     R<CustomerInfo> infoByUsername(@PathVariable("username") String username);
 
 }
