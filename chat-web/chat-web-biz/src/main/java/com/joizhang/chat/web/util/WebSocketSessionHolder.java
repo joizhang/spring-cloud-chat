@@ -13,16 +13,16 @@ public final class WebSocketSessionHolder {
 
     private static final Map<String, WebSocketSession> USER_SESSION_MAP = new ConcurrentHashMap<>();
 
-    public static void addSession(Object sessionKey, WebSocketSession session) {
-        USER_SESSION_MAP.put(sessionKey.toString(), session);
+    public static void addSession(String sessionKey, WebSocketSession session) {
+        USER_SESSION_MAP.put(sessionKey, session);
     }
 
-    public static void removeSession(Object sessionKey) {
-        USER_SESSION_MAP.remove(sessionKey.toString());
+    public static void removeSession(String sessionKey) {
+        USER_SESSION_MAP.remove(sessionKey);
     }
 
-    public static WebSocketSession getSession(Object sessionKey) {
-        return USER_SESSION_MAP.get(sessionKey.toString());
+    public static WebSocketSession getSession(String sessionKey) {
+        return USER_SESSION_MAP.get(sessionKey);
     }
 
     public static Collection<WebSocketSession> getSessions() {
