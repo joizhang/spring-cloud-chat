@@ -28,6 +28,11 @@
             <groupId>com.joizhang</groupId>
             <artifactId>chat-common-feign</artifactId>
         </dependency>
+        <!--安全依赖-->
+        <dependency>
+            <groupId>com.joizhang</groupId>
+            <artifactId>chat-common-security</artifactId>
+        </dependency>
         <!--upms api、model 模块-->
         <dependency>
             <groupId>com.joizhang</groupId>
@@ -37,10 +42,6 @@
         <dependency>
             <groupId>com.joizhang</groupId>
             <artifactId>chat-web-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.joizhang</groupId>
-            <artifactId>chat-common-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
