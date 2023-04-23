@@ -25,11 +25,11 @@ public class ChatFriendRequest extends BaseEntity {
     private Long id;
 
     @NotNull
-    @Schema(description = "好友请求发送着")
+    @Schema(description = "好友请求发送者")
     private Long senderId;
 
     @NotNull
-    @Schema(description = "好友请求接受者")
+    @Schema(description = "好友请求接收者")
     private Long receiverId;
 
     @NotNull

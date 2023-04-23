@@ -4,19 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class MessageVo {
+public class MessageVo implements Serializable {
 
     /**
      * 发送消息的用户
      */
-    private String from;
+    private Long senderId;
     /**
      * 目标用户（告知 STOMP 代理转发到哪个用户）
      */
-    private String to;
+    private Long receiverId;
 
     /**
      * 消息内容
@@ -24,8 +26,8 @@ public class MessageVo {
     private String content;
 
     /**
-     * 广播转发的目标地址（告知 STOMP 代理转发到哪个地方）
+     * 消息类型
      */
-    private String destination;
+    private Integer contentType;
 
 }

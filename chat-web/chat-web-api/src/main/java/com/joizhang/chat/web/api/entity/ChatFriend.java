@@ -2,6 +2,7 @@ package com.joizhang.chat.web.api.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.joizhang.chat.common.mybatis.base.BaseEntity;
@@ -33,5 +34,11 @@ public class ChatFriend extends BaseEntity {
 
     @Schema(description = "朋友备注名")
     private String remark;
+
+    /**
+     * 0-正常，1-删除
+     */
+    @TableLogic
+    private String delFlag;
 
 }

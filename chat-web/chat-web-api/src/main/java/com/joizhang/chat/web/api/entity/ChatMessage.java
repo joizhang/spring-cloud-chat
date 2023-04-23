@@ -38,6 +38,6 @@ public class ChatMessage extends BaseEntity {
     private String content;
 
     @NotNull(message = "消息类型不能为空")
-    @Schema(description = "消息类型：1-text, 2-emoji, 3-image, 4-audio, 5-video")
+    @Schema(description = "消息类型：0-error, 1-text and emoji, 2-image, 3-audio, 4-video")
     private Integer contentType;
 }
