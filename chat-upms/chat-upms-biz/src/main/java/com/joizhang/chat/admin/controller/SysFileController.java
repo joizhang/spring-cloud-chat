@@ -2,6 +2,7 @@ package com.joizhang.chat.admin.controller;
 
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -42,9 +43,11 @@ public class SysFileController {
      */
     @Operation(summary = "分页查询", description = "分页查询")
     @GetMapping("/page")
-    public R<IPage<SysFile>> getSysFilePage(Page page, SysFile sysFile) {
-        return R.ok(sysFileService.page(page, Wrappers.<SysFile>lambdaQuery()
-                .like(StrUtil.isNotBlank(sysFile.getFileName()), SysFile::getFileName, sysFile.getFileName())));
+    public R<IPage<SysFile>> getSysFilePage(Page<SysFile> page, SysFile sysFile) {
+        LambdaQueryWrapper<SysFile> queryWrapper = Wrappers.<SysFile>lambdaQuery()
+                .like(StrUtil.isNotBlank(sysFile.getFileName()), SysFile::getFileName, sysFile.getFileName());
+        Page<SysFile> sysFilePage = sysFileService.page(page, queryWrapper);
+        return R.ok(sysFilePage);
     }
 
     /**

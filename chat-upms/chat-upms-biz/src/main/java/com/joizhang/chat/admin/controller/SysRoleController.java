@@ -101,7 +101,7 @@ public class SysRoleController {
      * @return 分页对象
      */
     @GetMapping("/page")
-    public R<IPage<SysRole>> getRolePage(Page page) {
+    public R<IPage<SysRole>> getRolePage(Page<SysRole> page) {
         return R.ok(sysRoleService.page(page, Wrappers.emptyWrapper()));
     }
 

@@ -1,6 +1,7 @@
 package com.joizhang.chat.admin.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -52,9 +53,11 @@ public class SysDictController {
      * @return 分页对象
      */
     @GetMapping("/page")
-    public R<IPage<SysDict>> getDictPage(Page page, SysDict sysDict) {
-        return R.ok(sysDictService.page(page, Wrappers.<SysDict>lambdaQuery()
-                .like(StrUtil.isNotBlank(sysDict.getDictKey()), SysDict::getDictKey, sysDict.getDictKey())));
+    public R<IPage<SysDict>> getDictPage(Page<SysDict> page, SysDict sysDict) {
+        LambdaQueryWrapper<SysDict> queryWrapper = Wrappers.<SysDict>lambdaQuery()
+                .like(StrUtil.isNotBlank(sysDict.getDictKey()), SysDict::getDictKey, sysDict.getDictKey());
+        Page<SysDict> sysDictPage = sysDictService.page(page, queryWrapper);
+        return R.ok(sysDictPage);
     }
 
     /**
@@ -66,7 +69,9 @@ public class SysDictController {
     @GetMapping("/key/{key}")
     @Cacheable(value = CacheConstants.DICT_DETAILS, key = "#key")
     public R<List<SysDictItem>> getDictByKey(@PathVariable String key) {
-        return R.ok(sysDictItemService.list(Wrappers.<SysDictItem>query().lambda().eq(SysDictItem::getDictKey, key)));
+        LambdaQueryWrapper<SysDictItem> queryWrapper = Wrappers.<SysDictItem>query()
+                .lambda().eq(SysDictItem::getDictKey, key);
+        return R.ok(sysDictItemService.list(queryWrapper));
     }
 
     /**
@@ -118,7 +123,7 @@ public class SysDictController {
      * @return
      */
     @GetMapping("/item/page")
-    public R<IPage<SysDictItem>> getSysDictItemPage(Page page, SysDictItem sysDictItem) {
+    public R<IPage<SysDictItem>> getSysDictItemPage(Page<SysDictItem> page, SysDictItem sysDictItem) {
         return R.ok(sysDictItemService.page(page, Wrappers.query(sysDictItem)));
     }
 

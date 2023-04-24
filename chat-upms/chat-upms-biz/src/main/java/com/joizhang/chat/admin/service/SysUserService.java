@@ -35,7 +35,7 @@ public interface SysUserService extends IService<SysUser> {
      * @param userDTO 参数列表
      * @return
      */
-    IPage<UserVO> getUserWithRolePage(Page page, UserDTO userDTO);
+    IPage<UserVO> getUserWithRolePage(Page<UserVO> page, UserDTO userDTO);
 
     /**
      * 删除用户

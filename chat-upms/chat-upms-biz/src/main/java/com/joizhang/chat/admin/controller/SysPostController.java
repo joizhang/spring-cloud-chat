@@ -1,5 +1,7 @@
 package com.joizhang.chat.admin.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joizhang.chat.admin.api.entity.SysPost;
@@ -48,8 +50,10 @@ public class SysPostController {
     @Operation(summary = "分页查询", description = "分页查询")
     @GetMapping("/page")
     @PreAuthorize("@pms.hasPermission('sys_post_get')")
-    public R getSysPostPage(Page page) {
-        return R.ok(sysPostService.page(page, Wrappers.<SysPost>lambdaQuery().orderByAsc(SysPost::getPostSort)));
+    public R<IPage<SysPost>> getSysPostPage(Page<SysPost> page) {
+        LambdaQueryWrapper<SysPost> queryWrapper = Wrappers.<SysPost>lambdaQuery()
+                .orderByAsc(SysPost::getPostSort);
+        return R.ok(sysPostService.page(page, queryWrapper));
     }
 
     /**
@@ -61,7 +65,7 @@ public class SysPostController {
     @Operation(summary = "通过id查询", description = "通过id查询")
     @GetMapping("/{postId}")
     @PreAuthorize("@pms.hasPermission('sys_post_get')")
-    public R getById(@PathVariable("postId") Long postId) {
+    public R<SysPost> getById(@PathVariable("postId") Long postId) {
         return R.ok(sysPostService.getById(postId));
     }
 
@@ -75,7 +79,7 @@ public class SysPostController {
     @RecordSysLog("新增岗位信息表")
     @PostMapping
     @PreAuthorize("@pms.hasPermission('sys_post_add')")
-    public R save(@RequestBody SysPost sysPost) {
+    public R<Boolean> save(@RequestBody SysPost sysPost) {
         return R.ok(sysPostService.save(sysPost));
     }
 
@@ -89,7 +93,7 @@ public class SysPostController {
     @RecordSysLog("修改岗位信息表")
     @PutMapping
     @PreAuthorize("@pms.hasPermission('sys_post_edit')")
-    public R updateById(@RequestBody SysPost sysPost) {
+    public R<Boolean> updateById(@RequestBody SysPost sysPost) {
         return R.ok(sysPostService.updateById(sysPost));
     }
 
@@ -103,7 +107,7 @@ public class SysPostController {
     @RecordSysLog("通过id删除岗位信息表")
     @DeleteMapping("/{postId}")
     @PreAuthorize("@pms.hasPermission('sys_post_del')")
-    public R removeById(@PathVariable Long postId) {
+    public R<Boolean> removeById(@PathVariable Long postId) {
         return R.ok(sysPostService.removeById(postId));
     }
 

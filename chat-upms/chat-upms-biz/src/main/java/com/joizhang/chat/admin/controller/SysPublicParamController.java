@@ -1,6 +1,8 @@
 package com.joizhang.chat.admin.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joizhang.chat.admin.api.entity.SysPublicParam;
@@ -47,13 +49,13 @@ public class SysPublicParamController {
      */
     @Operation(summary = "分页查询", description = "分页查询")
     @GetMapping("/page")
-    public R getSysPublicParamPage(Page page, SysPublicParam sysPublicParam) {
-        return R.ok(sysPublicParamService.page(page,
-                Wrappers.<SysPublicParam>lambdaQuery()
-                        .like(StrUtil.isNotBlank(sysPublicParam.getPublicName()), SysPublicParam::getPublicName,
-                                sysPublicParam.getPublicName())
-                        .like(StrUtil.isNotBlank(sysPublicParam.getPublicKey()), SysPublicParam::getPublicKey,
-                                sysPublicParam.getPublicKey())));
+    public R<IPage<SysPublicParam>> getSysPublicParamPage(Page<SysPublicParam> page, SysPublicParam sysPublicParam) {
+        LambdaQueryWrapper<SysPublicParam> queryWrapper = Wrappers.<SysPublicParam>lambdaQuery()
+                .like(StrUtil.isNotBlank(sysPublicParam.getPublicName()), SysPublicParam::getPublicName,
+                        sysPublicParam.getPublicName())
+                .like(StrUtil.isNotBlank(sysPublicParam.getPublicKey()), SysPublicParam::getPublicKey,
+                        sysPublicParam.getPublicKey());
+        return R.ok(sysPublicParamService.page(page, queryWrapper));
     }
 
     /**
@@ -64,7 +66,7 @@ public class SysPublicParamController {
      */
     @Operation(summary = "通过id查询公共参数", description = "通过id查询公共参数")
     @GetMapping("/{publicId}")
-    public R getById(@PathVariable("publicId") Long publicId) {
+    public R<SysPublicParam> getById(@PathVariable("publicId") Long publicId) {
         return R.ok(sysPublicParamService.getById(publicId));
     }
 
@@ -78,7 +80,7 @@ public class SysPublicParamController {
     @RecordSysLog("新增公共参数")
     @PostMapping
     @PreAuthorize("@pms.hasPermission('sys_publicparam_add')")
-    public R save(@RequestBody SysPublicParam sysPublicParam) {
+    public R<Boolean> save(@RequestBody SysPublicParam sysPublicParam) {
         return R.ok(sysPublicParamService.save(sysPublicParam));
     }
 

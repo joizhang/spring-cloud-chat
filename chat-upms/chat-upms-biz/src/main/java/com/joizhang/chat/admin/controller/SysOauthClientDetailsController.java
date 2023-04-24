@@ -49,7 +49,7 @@ public class SysOauthClientDetailsController {
      * @return
      */
     @GetMapping("/page")
-    public R<IPage<SysOauthClientDetails>> getOauthClientDetailsPage(Page page,
+    public R<IPage<SysOauthClientDetails>> getOauthClientDetailsPage(Page<SysOauthClientDetails> page,
                                                                      SysOauthClientDetails sysOauthClientDetails) {
         return R.ok(sysOauthClientDetailsService.page(page, Wrappers.query(sysOauthClientDetails)));
     }
