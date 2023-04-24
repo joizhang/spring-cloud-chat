@@ -2,7 +2,6 @@ package com.joizhang.chat.web.handler;
 
 import cn.hutool.json.JSONUtil;
 import com.joizhang.chat.web.api.constant.RabbitConstants;
-import com.joizhang.chat.web.api.entity.ChatMessage;
 import com.joizhang.chat.web.api.vo.MessageVo;
 import com.joizhang.chat.web.service.ChatMessageService;
 import com.rabbitmq.client.Channel;

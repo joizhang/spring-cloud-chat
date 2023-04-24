@@ -51,14 +51,9 @@ public class WebSocketConfig {
     @ConditionalOnMissingBean
     public WebSocketConfigurer webSocketConfigurer(List<HandshakeInterceptor> handshakeInterceptor,
                                                    WebSocketHandler webSocketHandler) {
-        return new WebSocketConfigurer() {
-            @Override
-            public void registerWebSocketHandlers(@NonNull WebSocketHandlerRegistry registry) {
-                registry.addHandler(webSocketHandler, webSocketProperties.getPath())
-                        .addInterceptors(handshakeInterceptor.toArray(new HandshakeInterceptor[0]))
-                        .setAllowedOrigins(webSocketProperties.getAllowOrigins());
-            }
-        };
+        return registry -> registry.addHandler(webSocketHandler, webSocketProperties.getPath())
+                .addInterceptors(handshakeInterceptor.toArray(new HandshakeInterceptor[0]))
+                .setAllowedOrigins(webSocketProperties.getAllowOrigins());
     }
 
 }

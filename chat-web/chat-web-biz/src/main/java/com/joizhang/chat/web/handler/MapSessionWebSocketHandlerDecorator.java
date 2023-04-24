@@ -16,13 +16,15 @@ public class MapSessionWebSocketHandlerDecorator extends WebSocketHandlerDecorat
         this.sessionKeyGenerator = sessionKeyGenerator;
     }
 
-    public void afterConnectionEstablished(@NonNull WebSocketSession session) throws Exception {
+    @Override
+    public void afterConnectionEstablished(@NonNull WebSocketSession session) {
         String sessionKey = this.sessionKeyGenerator.sessionKey(session);
         WebSocketSessionHolder.addSession(sessionKey, session);
     }
 
+    @Override
     public void afterConnectionClosed(@NonNull WebSocketSession session,
-                                      @NonNull CloseStatus closeStatus) throws Exception {
+                                      @NonNull CloseStatus closeStatus) {
         String sessionKey = this.sessionKeyGenerator.sessionKey(session);
         WebSocketSessionHolder.removeSession(sessionKey);
     }

@@ -15,7 +15,6 @@ import org.springframework.amqp.AmqpException;
 import org.springframework.lang.NonNull;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.ConcurrentWebSocketSessionDecorator;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -39,7 +38,7 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
         WebSocketSessionHolder.addSession(sessionKey, sessionDecorator);
     }
 
-    protected void handleTextMessage(@NotNull WebSocketSession session, @NotNull TextMessage message) throws Exception {
+    protected void handleTextMessage(@NotNull WebSocketSession session, @NotNull TextMessage message) {
         String sessionKey = this.sessionKeyGenerator.sessionKey(session);
         WebSocketSession sessionDecorator = WebSocketSessionHolder.getSession(sessionKey);
         String payload = message.getPayload();
