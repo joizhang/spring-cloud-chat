@@ -35,7 +35,8 @@ public class GenDsConfController {
      * @return
      */
     @GetMapping("/page")
-    public R<IPage<GenDatasourceConf>> getSysDatasourceConfPage(Page page, GenDatasourceConf datasourceConf) {
+    public R<IPage<GenDatasourceConf>> getSysDatasourceConfPage(Page<GenDatasourceConf> page,
+                                                                GenDatasourceConf datasourceConf) {
         return R.ok(datasourceConfService.page(page, Wrappers.query(datasourceConf)));
     }
 

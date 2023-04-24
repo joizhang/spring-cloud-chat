@@ -39,7 +39,7 @@ public class GenFormConfController {
      */
     @Operation(summary = "分页查询", description = "分页查询")
     @GetMapping("/page")
-    public R<IPage<GenFormConf>> getGenFormConfPage(Page page, GenFormConf formConf) {
+    public R<IPage<GenFormConf>> getGenFormConfPage(Page<GenFormConf> page, GenFormConf formConf) {
         return R.ok(genRecordService.page(page, Wrappers.query(formConf)));
     }
 
