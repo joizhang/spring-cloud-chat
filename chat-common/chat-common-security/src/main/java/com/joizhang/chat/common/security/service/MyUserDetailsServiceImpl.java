@@ -1,8 +1,8 @@
 package com.joizhang.chat.common.security.service;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.joizhang.chat.admin.api.dto.UserInfo;
 import com.joizhang.chat.admin.api.feign.RemoteUserService;
+import com.joizhang.chat.admin.api.vo.UserInfoVO;
 import com.joizhang.chat.common.core.constant.CacheConstants;
 import com.joizhang.chat.common.core.util.R;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
         if (ObjectUtil.isNotNull(cache) && ObjectUtil.isNotNull(cache.get(username))) {
             return (MyUser) cache.get(username).get();
         }
-        R<UserInfo> result = remoteUserService.infoByUsername(username);
+        R<UserInfoVO> result = remoteUserService.infoByUsername(username);
         UserDetails userDetails = getUserDetails(result);
         if (cache != null) {
             cache.put(username, userDetails);

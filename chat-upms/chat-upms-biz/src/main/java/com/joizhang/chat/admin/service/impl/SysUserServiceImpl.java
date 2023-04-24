@@ -8,10 +8,10 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.joizhang.chat.admin.api.dto.UserDTO;
-import com.joizhang.chat.admin.api.dto.UserInfo;
 import com.joizhang.chat.admin.api.entity.*;
 import com.joizhang.chat.admin.api.util.ParamResolver;
 import com.joizhang.chat.admin.api.vo.UserExcelVO;
+import com.joizhang.chat.admin.api.vo.UserInfoVO;
 import com.joizhang.chat.admin.api.vo.UserVO;
 import com.joizhang.chat.admin.mapper.*;
 import com.joizhang.chat.admin.service.AppService;
@@ -96,21 +96,21 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * 通过查用户的全部信息
      *
      * @param sysUser 用户
-     * @return
+     * @return UserInfoVO
      */
     @Override
-    public UserInfo getUserInfo(SysUser sysUser) {
-        UserInfo userInfo = new UserInfo();
+    public UserInfoVO getUserInfo(SysUser sysUser) {
+        UserInfoVO userInfo = new UserInfoVO();
         userInfo.setSysUser(sysUser);
         // 设置角色列表
         List<SysRole> roleList = sysRoleMapper.listRolesByUserId(sysUser.getUserId());
-        userInfo.setRoleList(roleList);
+//        userInfo.setRoleList(roleList);
         // 设置角色列表 （ID）
         List<Long> roleIds = roleList.stream().map(SysRole::getRoleId).collect(Collectors.toList());
         userInfo.setRoles(ArrayUtil.toArray(roleIds, Long.class));
         // 设置岗位列表
         List<SysPost> postList = sysPostMapper.listPostsByUserId(sysUser.getUserId());
-        userInfo.setPostList(postList);
+//        userInfo.setPostList(postList);
         // 设置权限列表（menu.permission）
         Set<String> permissions = roleIds.stream()
                 .map(sysMenuService::findMenuByRoleId)

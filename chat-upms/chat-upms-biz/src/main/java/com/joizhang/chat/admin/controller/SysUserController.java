@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joizhang.chat.admin.api.dto.UserDTO;
-import com.joizhang.chat.admin.api.dto.UserInfo;
 import com.joizhang.chat.admin.api.entity.SysUser;
 import com.joizhang.chat.admin.api.vo.UserExcelVO;
 import com.joizhang.chat.admin.api.vo.UserInfoVO;
@@ -55,12 +54,7 @@ public class SysUserController {
         if (user == null) {
             return R.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_QUERY_ERROR));
         }
-        UserInfo userInfo = userService.getUserInfo(user);
-        UserInfoVO vo = new UserInfoVO();
-        vo.setSysUser(userInfo.getSysUser());
-        vo.setRoles(userInfo.getRoles());
-        vo.setPermissions(userInfo.getPermissions());
-        return R.ok(vo);
+        return R.ok(userService.getUserInfo(user));
     }
 
     /**
@@ -70,7 +64,7 @@ public class SysUserController {
      */
     @Inner
     @GetMapping("/info/{username}")
-    public R<UserInfo> info(@PathVariable String username) {
+    public R<UserInfoVO> info(@PathVariable String username) {
         SysUser user = userService.getOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getUsername, username));
         if (user == null) {
             return R.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_USERINFO_EMPTY, username));

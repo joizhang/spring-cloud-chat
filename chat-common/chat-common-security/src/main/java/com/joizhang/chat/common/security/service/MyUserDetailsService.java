@@ -2,8 +2,8 @@ package com.joizhang.chat.common.security.service;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
-import com.joizhang.chat.admin.api.dto.UserInfo;
 import com.joizhang.chat.admin.api.entity.SysUser;
+import com.joizhang.chat.admin.api.vo.UserInfoVO;
 import com.joizhang.chat.common.core.constant.CommonConstants;
 import com.joizhang.chat.common.core.constant.SecurityConstants;
 import com.joizhang.chat.common.core.util.R;
@@ -47,8 +47,8 @@ public interface MyUserDetailsService extends UserDetailsService, Ordered {
      * @param result 用户信息
      * @return UserDetails
      */
-    default UserDetails getUserDetails(R<UserInfo> result) {
-        UserInfo info = RetOps.of(result)
+    default UserDetails getUserDetails(R<UserInfoVO> result) {
+        UserInfoVO info = RetOps.of(result)
                 .getData()
                 .orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
 
@@ -85,7 +85,7 @@ public interface MyUserDetailsService extends UserDetailsService, Ordered {
      * 通过用户实体查询
      *
      * @param pigUser user
-     * @return
+     * @return UserDetails
      */
     default UserDetails loadUserByUser(MyUser pigUser) {
         return this.loadUserByUsername(pigUser.getUsername());

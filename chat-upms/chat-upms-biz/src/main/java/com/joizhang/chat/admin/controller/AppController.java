@@ -2,8 +2,8 @@ package com.joizhang.chat.admin.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.joizhang.chat.admin.api.dto.AppSmsDTO;
-import com.joizhang.chat.admin.api.dto.UserInfo;
 import com.joizhang.chat.admin.api.entity.SysUser;
+import com.joizhang.chat.admin.api.vo.UserInfoVO;
 import com.joizhang.chat.admin.service.AppService;
 import com.joizhang.chat.admin.service.SysUserService;
 import com.joizhang.chat.common.core.exception.ErrorCodes;
@@ -49,7 +49,7 @@ public class AppController {
      */
     @Inner
     @GetMapping("/info/{phone}")
-    public R<UserInfo> infoByMobile(@PathVariable String phone) {
+    public R<UserInfoVO> infoByMobile(@PathVariable String phone) {
         SysUser user = userService.getOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getPhone, phone));
         if (user == null) {
             return R.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_USERINFO_EMPTY, phone));

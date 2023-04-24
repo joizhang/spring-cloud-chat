@@ -1,6 +1,6 @@
 package com.joizhang.chat.admin.api.feign;
 
-import com.joizhang.chat.admin.api.dto.UserInfo;
+import com.joizhang.chat.admin.api.vo.UserInfoVO;
 import com.joizhang.chat.common.core.constant.SecurityConstants;
 import com.joizhang.chat.common.core.constant.ServiceNameConstants;
 import com.joizhang.chat.common.core.util.R;
@@ -25,7 +25,7 @@ public interface RemoteUserService {
      * @return R
      */
     @GetMapping(value = "/user/info/{username}", headers = SecurityConstants.HEADER_FROM_IN)
-    R<UserInfo> infoByUsername(@PathVariable("username") String username);
+    R<UserInfoVO> infoByUsername(@PathVariable("username") String username);
 
     /**
      * 通过手机号码查询用户、角色信息
@@ -34,7 +34,7 @@ public interface RemoteUserService {
      * @return R
      */
     @GetMapping(value = "/app/info/{phone}", headers = SecurityConstants.HEADER_FROM_IN)
-    R<UserInfo> infoByMobile(@PathVariable("phone") String phone);
+    R<UserInfoVO> infoByMobile(@PathVariable("phone") String phone);
 
     /**
      * 根据部门id，查询对应的用户 id 集合

@@ -2,7 +2,7 @@ package com.joizhang.chat.common.security.service;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.joizhang.chat.admin.api.dto.UserInfo;
+import com.joizhang.chat.admin.api.vo.UserInfoVO;
 import com.joizhang.chat.common.core.constant.CacheConstants;
 import com.joizhang.chat.common.core.constant.CommonConstants;
 import com.joizhang.chat.common.core.constant.SecurityConstants;
@@ -43,7 +43,7 @@ public class MyCustomerUserDetailsServiceImpl implements MyUserDetailsService {
     }
 
     @Override
-    public UserDetails getUserDetails(R<UserInfo> result) {
+    public UserDetails getUserDetails(R<UserInfoVO> result) {
         throw new UnsupportedOperationException();
     }
 
