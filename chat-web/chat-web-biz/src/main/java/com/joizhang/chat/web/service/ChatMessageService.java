@@ -10,7 +10,7 @@ import com.joizhang.chat.web.api.vo.MessageVo;
 public interface ChatMessageService extends IService<ChatMessage> {
 
     /**
-     * 持久化并发送至消息队列
+     * 发送至消息队列
      *
      * @param messageVo 消息
      */

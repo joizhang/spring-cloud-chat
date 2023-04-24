@@ -10,10 +10,12 @@ import com.joizhang.chat.web.service.ChatMessageService;
 import com.joizhang.chat.web.util.WebSocketSessionHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.amqp.AmqpException;
 import org.springframework.lang.NonNull;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.ConcurrentWebSocketSessionDecorator;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -37,8 +39,7 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
         WebSocketSessionHolder.addSession(sessionKey, sessionDecorator);
     }
 
-    @Override
-    public void handleTextMessage(@NonNull WebSocketSession session, TextMessage message) {
+    protected void handleTextMessage(@NotNull WebSocketSession session, @NotNull TextMessage message) throws Exception {
         String sessionKey = this.sessionKeyGenerator.sessionKey(session);
         WebSocketSession sessionDecorator = WebSocketSessionHolder.getSession(sessionKey);
         String payload = message.getPayload();
@@ -49,9 +50,12 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
             log.debug("sessionId {} ,msg {}", session.getId(), messageVo);
             messageService.sendToMQ(messageVo);
         } catch (JsonProcessingException e) {
+            // 消息结构异常
             errorMessage = new MessageVo(0L, 0L,
                     "ERROR: ILLEGAL DATA FORMAT", MessageContentType.ERROR.getType());
         } catch (AmqpException e) {
+            // 消息队列异常
+            log.error("Message queue error: {}", e.getMessage());
             errorMessage = new MessageVo(0L, 0L,
                     "ERROR: MESSAGE QUEUE CONNECTION ERROR", MessageContentType.ERROR.getType());
         }
