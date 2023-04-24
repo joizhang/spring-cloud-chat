@@ -1,9 +1,6 @@
 package com.joizhang.chat.web.config;
 
-import com.joizhang.chat.web.handler.CustomWebSocketHandler;
-import com.joizhang.chat.web.handler.SecuritySessionKeyGenerator;
-import com.joizhang.chat.web.handler.SessionKeyGenerator;
-import com.joizhang.chat.web.handler.UserAttributeHandshakeInterceptor;
+import com.joizhang.chat.web.handler.*;
 import com.joizhang.chat.web.service.ChatMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +26,6 @@ public class WebSocketConfig {
 
     private final WebSocketProperties webSocketProperties;
 
-    private final ChatMessageService messageService;
-
     @Bean
     @ConditionalOnMissingBean({SessionKeyGenerator.class})
     public SessionKeyGenerator sessionKeyGenerator() {
@@ -45,8 +40,11 @@ public class WebSocketConfig {
 
     @Bean
     @ConditionalOnMissingBean({TextWebSocketHandler.class})
-    public WebSocketHandler webSocketHandler(@Autowired(required = false) SessionKeyGenerator sessionKeyGenerator) {
-        return new CustomWebSocketHandler(sessionKeyGenerator, messageService);
+    public WebSocketHandler webSocketHandler(@Autowired(required = false) SessionKeyGenerator sessionKeyGenerator,
+                                             ChatMessageService messageService) {
+        CustomWebSocketHandler customWebSocketHandler =
+                new CustomWebSocketHandler(sessionKeyGenerator, messageService);
+        return new MapSessionWebSocketHandlerDecorator(customWebSocketHandler, sessionKeyGenerator);
     }
 
     @Bean
