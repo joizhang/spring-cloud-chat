@@ -28,6 +28,9 @@ import java.util.function.Predicate;
  *        .map(i -> Integer.toHexString(i))
  *        .peek();
  * </pre>
+ *
+ * @author CJ (power4j@outlook.com)
+ * @since 2022/5/12
  */
 public class RetOps<T> {
 

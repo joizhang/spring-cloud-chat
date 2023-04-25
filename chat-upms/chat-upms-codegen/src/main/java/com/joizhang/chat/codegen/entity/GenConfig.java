@@ -4,6 +4,9 @@ import lombok.Data;
 
 /**
  * 生成配置
+ *
+ * @author lengleng
+ * @since 2018/8/2 生成配置
  */
 @Data
 public class GenConfig {

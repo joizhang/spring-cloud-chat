@@ -1,5 +1,9 @@
 package com.joizhang.chat.common.core.exception;
 
+/**
+ * @author lengleng
+ * @since 😴2018年06月22日16:21:57
+ */
 public class CheckedException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;

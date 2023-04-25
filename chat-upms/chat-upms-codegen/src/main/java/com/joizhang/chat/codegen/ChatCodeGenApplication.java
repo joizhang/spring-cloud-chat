@@ -10,6 +10,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * 代码生成模块
+ *
+ * @author lengleng
+ * @since 2020/03/11
  */
 @EnableSwaggerDoc
 @EnableDynamicDataSource

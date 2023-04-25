@@ -11,6 +11,9 @@ import java.util.Map;
 
 /**
  * 代码生成器
+ *
+ * @author lengleng
+ * @since 2018-07-30
  */
 @Mapper
 public interface GeneratorMapper {

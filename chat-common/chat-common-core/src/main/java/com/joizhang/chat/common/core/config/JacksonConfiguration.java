@@ -18,6 +18,11 @@ import java.util.TimeZone;
 
 /**
  * JacksonConfig
+ *
+ * @author lengleng
+ * @author L.cm
+ * @author lishangbu
+ * @since 2020-06-17
  */
 @AutoConfiguration
 @ConditionalOnClass(ObjectMapper.class)

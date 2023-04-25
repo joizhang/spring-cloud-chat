@@ -15,6 +15,8 @@ import java.util.Properties;
 
 /**
  * 读取自定义 yaml 文件工厂类
+ *
+ * @author lengleng
  */
 public class YamlPropertySourceFactory implements PropertySourceFactory {
 

@@ -2,6 +2,9 @@ package com.joizhang.chat.common.core.constant;
 
 /**
  * 通用常量
+ *
+ * @author lengleng
+ * @author joizhang
  */
 public interface CommonConstants {
 

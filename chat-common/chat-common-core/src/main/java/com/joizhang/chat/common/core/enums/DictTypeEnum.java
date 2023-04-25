@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * 字典类型
+ *
+ * @author lengleng
+ * @since 2019-05-16
  */
 @Getter
 @RequiredArgsConstructor

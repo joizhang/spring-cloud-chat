@@ -1,7 +1,10 @@
 package com.joizhang.chat.common.core.constant;
 
 /**
- * 缓存的key 常量
+ * 缓存的 key 常量
+ *
+ * @author lengleng
+ * @author joizhang
  */
 public interface CacheConstants {
 

@@ -5,6 +5,9 @@ import com.joizhang.chat.codegen.entity.GenDatasourceConf;
 
 /**
  * 数据源表
+ *
+ * @author lengleng
+ * @since 2019-03-31 16:00:20
  */
 public interface GenDatasourceConfService extends IService<GenDatasourceConf> {
 

@@ -4,6 +4,9 @@ import lombok.Data;
 
 /**
  * 列属性： https://blog.csdn.net/lkforce/article/details/79557482
+ *
+ * @author lengleng
+ * @since 2018/07/29
  */
 @Data
 public class ColumnEntity {

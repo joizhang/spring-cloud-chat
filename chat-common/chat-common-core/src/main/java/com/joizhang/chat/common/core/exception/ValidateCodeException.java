@@ -1,5 +1,9 @@
 package com.joizhang.chat.common.core.exception;
 
+/**
+ * @author lengleng
+ * @since 2018年06月22日16:22:15
+ */
 public class ValidateCodeException extends RuntimeException {
 
     private static final long serialVersionUID = -7285211528095468156L;

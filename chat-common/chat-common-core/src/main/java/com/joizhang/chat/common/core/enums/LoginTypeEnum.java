@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * 社交登录类型
+ *
+ * @author lengleng
+ * @since 2018/8/15
  */
 @Getter
 @RequiredArgsConstructor

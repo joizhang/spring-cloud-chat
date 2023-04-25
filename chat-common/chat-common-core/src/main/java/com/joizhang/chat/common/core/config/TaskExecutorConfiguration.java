@@ -10,6 +10,12 @@ import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
+/**
+ * 线程池
+ *
+ * @author lengleng
+ * @since 2022/5/20
+ */
 @AutoConfiguration
 public class TaskExecutorConfiguration implements AsyncConfigurer {
 

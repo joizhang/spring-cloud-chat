@@ -1,5 +1,8 @@
 package com.joizhang.chat.common.core.exception;
 
+/**
+ * @author lengleng
+ */
 public class DeniedException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;

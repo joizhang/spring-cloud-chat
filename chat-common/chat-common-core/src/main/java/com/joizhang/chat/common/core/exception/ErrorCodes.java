@@ -2,6 +2,9 @@ package com.joizhang.chat.common.core.exception;
 
 /**
  * 错误编码
+ *
+ * @author lengleng
+ * @since 2022/3/30
  */
 public interface ErrorCodes {
 

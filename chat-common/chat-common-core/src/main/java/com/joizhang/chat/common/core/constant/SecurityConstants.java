@@ -2,6 +2,9 @@ package com.joizhang.chat.common.core.constant;
 
 /**
  * 安全常量
+ *
+ * @author lengleng
+ * @author joizhang
  */
 public interface SecurityConstants {
 

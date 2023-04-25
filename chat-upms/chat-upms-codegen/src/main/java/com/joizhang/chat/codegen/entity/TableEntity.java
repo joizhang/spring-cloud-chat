@@ -6,6 +6,9 @@ import java.util.List;
 
 /**
  * 表属性： https://blog.csdn.net/lkforce/article/details/79557482
+ *
+ * @author lengleng
+ * @since 2018/07/29
  */
 @Data
 public class TableEntity {

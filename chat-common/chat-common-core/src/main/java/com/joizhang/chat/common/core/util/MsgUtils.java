@@ -7,6 +7,9 @@ import java.util.Locale;
 
 /**
  * i18n 工具类
+ *
+ * @author lengleng
+ * @since 2022/3/30
  */
 @UtilityClass
 public class MsgUtils {

@@ -9,6 +9,9 @@ import java.util.Map;
 
 /**
  * 生成器
+ *
+ * @author lengleng
+ * @since 2018/7/29
  */
 public interface GeneratorService {
 
