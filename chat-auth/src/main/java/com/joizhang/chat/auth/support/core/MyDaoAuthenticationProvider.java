@@ -32,6 +32,8 @@ import java.util.function.Supplier;
 
 /**
  *
+ *
+ * @author lengleng
  */
 public class MyDaoAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 

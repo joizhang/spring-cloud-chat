@@ -16,6 +16,8 @@ import java.util.Map;
 
 /**
  * swagger 3.0 展示
+ *
+ * @author lengleng
  */
 @Configuration(proxyBeanMethods = false)
 public class SpringDocConfiguration {

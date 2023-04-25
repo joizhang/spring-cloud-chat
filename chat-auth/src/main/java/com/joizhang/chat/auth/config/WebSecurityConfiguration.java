@@ -10,6 +10,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 /**
  * 服务安全相关配置
+ *
+ * @author lengleng
  */
 @EnableWebSecurity
 public class WebSecurityConfiguration {

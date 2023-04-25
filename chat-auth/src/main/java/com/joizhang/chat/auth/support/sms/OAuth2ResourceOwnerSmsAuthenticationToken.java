@@ -9,6 +9,8 @@ import java.util.Set;
 
 /**
  * 短信登录token信息
+ *
+ * @author lengleng
  */
 public class OAuth2ResourceOwnerSmsAuthenticationToken extends OAuth2ResourceOwnerBaseAuthenticationToken {
 

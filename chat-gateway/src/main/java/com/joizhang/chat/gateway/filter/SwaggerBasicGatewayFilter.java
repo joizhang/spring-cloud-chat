@@ -18,6 +18,8 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * swagger 开启basic 认证
+ *
+ * @author edgar
  */
 @Slf4j
 @RequiredArgsConstructor

@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 
 /**
  * 基于授权码模式 统一认证登录 spring security & sas 都可以使用，所以抽取成 HttpConfigurer
+ *
+ * @author lengleng
  */
 public final class FormIdentityLoginConfigurer
         extends AbstractHttpConfigurer<FormIdentityLoginConfigurer, HttpSecurity> {

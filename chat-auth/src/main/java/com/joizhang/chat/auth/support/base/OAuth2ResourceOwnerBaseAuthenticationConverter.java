@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 
 /**
  * 自定义模式认证转换器
+ *
+ * @author jumuning
  */
 public abstract class OAuth2ResourceOwnerBaseAuthenticationConverter<T extends OAuth2ResourceOwnerBaseAuthenticationToken>
         implements AuthenticationConverter {

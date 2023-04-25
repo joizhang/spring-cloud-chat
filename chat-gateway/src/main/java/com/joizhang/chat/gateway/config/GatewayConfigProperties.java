@@ -8,6 +8,9 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 import java.util.List;
 
+/**
+ * @author lengleng
+ */
 @Data
 @RefreshScope
 @ConfigurationProperties("gateway")

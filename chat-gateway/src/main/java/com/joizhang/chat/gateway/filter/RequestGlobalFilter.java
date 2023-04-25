@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
  * 2. 重写StripPrefix = 1,支持全局
  * <p>
  * 支持swagger添加X-Forwarded-Prefix header （F SR2 已经支持，不需要自己维护）
+ *
+ * @author lengleng
  */
 public class RequestGlobalFilter implements GlobalFilter, Ordered {
 

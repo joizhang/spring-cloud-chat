@@ -19,7 +19,7 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- *
+ * @author lengleng
  */
 public class CustomOAuth2AccessTokenGenerator implements OAuth2TokenGenerator<OAuth2AccessToken> {
 

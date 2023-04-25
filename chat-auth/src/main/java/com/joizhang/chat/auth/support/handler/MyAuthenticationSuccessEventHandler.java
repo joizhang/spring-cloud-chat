@@ -32,6 +32,8 @@ import java.util.Map;
 
 /**
  * 登陆成功处理
+ *
+ * @author lengleng
  */
 @Slf4j
 public class MyAuthenticationSuccessEventHandler implements AuthenticationSuccessHandler {

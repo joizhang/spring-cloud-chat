@@ -37,6 +37,8 @@ import java.util.function.Supplier;
  * {@link com.joizhang.chat.auth.support.password.OAuth2ResourceOwnerPasswordAuthenticationProvider}
  * <p>
  * {@link com.joizhang.chat.auth.support.sms.OAuth2ResourceOwnerSmsAuthenticationProvider}
+ *
+ * @author jumuning
  */
 @Slf4j
 public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OAuth2ResourceOwnerBaseAuthenticationToken>

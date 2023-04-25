@@ -28,6 +28,8 @@ import java.io.IOException;
 
 /**
  * 登陆失败处理
+ *
+ * @author lengleng
  */
 @Slf4j
 public class MyAuthenticationFailureEventHandler implements AuthenticationFailureHandler {

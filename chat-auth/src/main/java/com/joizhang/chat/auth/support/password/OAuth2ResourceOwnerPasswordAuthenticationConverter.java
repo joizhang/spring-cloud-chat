@@ -15,6 +15,8 @@ import java.util.Set;
 
 /**
  * 密码认证转换器
+ *
+ * @author jumuning
  */
 public class OAuth2ResourceOwnerPasswordAuthenticationConverter
         extends OAuth2ResourceOwnerBaseAuthenticationConverter<OAuth2ResourceOwnerPasswordAuthenticationToken> {

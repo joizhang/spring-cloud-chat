@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 
 /**
  * 针对 nacos 2.x 服务注册处理
+ *
+ * @author lengleng
+ * @since 2021/12/20
  */
 @Configuration(proxyBeanMethods = false)
 public class NacosServiceInstanceConverter extends DefaultServiceInstanceConverter {

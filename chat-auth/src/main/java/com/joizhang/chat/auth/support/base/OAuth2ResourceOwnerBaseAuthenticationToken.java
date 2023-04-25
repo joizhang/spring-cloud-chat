@@ -11,6 +11,8 @@ import java.util.*;
 
 /**
  * 自定义授权模式抽象
+ *
+ * @author lengleng
  */
 public abstract class OAuth2ResourceOwnerBaseAuthenticationToken extends AbstractAuthenticationToken {
 

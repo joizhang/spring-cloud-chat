@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 表单登录失败处理逻辑
+ *
+ * @author lengleng
  */
 @Slf4j
 public class FormAuthenticationFailureHandler implements AuthenticationFailureHandler {

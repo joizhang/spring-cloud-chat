@@ -8,6 +8,8 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 
 /**
  * token 输出增强
+ *
+ * @author lengleng
  */
 public class CustomOAuth2TokenCustomizer implements OAuth2TokenCustomizer<OAuth2TokenClaimsContext> {
 

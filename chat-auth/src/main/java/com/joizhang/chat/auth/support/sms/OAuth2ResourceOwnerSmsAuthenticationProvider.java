@@ -17,6 +17,8 @@ import java.util.Map;
 
 /**
  * 短信登录的核心处理
+ *
+ * @author lengleng
  */
 @Slf4j
 public class OAuth2ResourceOwnerSmsAuthenticationProvider

@@ -15,6 +15,8 @@ import java.util.Set;
 
 /**
  * 短信登录转换器
+ *
+ * @author lengleng
  */
 public class OAuth2ResourceOwnerSmsAuthenticationConverter
         extends OAuth2ResourceOwnerBaseAuthenticationConverter<OAuth2ResourceOwnerSmsAuthenticationToken> {

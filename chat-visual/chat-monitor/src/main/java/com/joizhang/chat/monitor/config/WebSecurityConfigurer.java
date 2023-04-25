@@ -8,6 +8,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
+/**
+ * @author lishangbu
+ * @since 2019/2/1
+ */
 @EnableWebSecurity
 public class WebSecurityConfigurer {
 

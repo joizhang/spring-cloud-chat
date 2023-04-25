@@ -10,6 +10,8 @@ import java.util.Objects;
 
 /**
  * 路由限流配置
+ *
+ * @author lengleng
  */
 @Configuration(proxyBeanMethods = false)
 public class RateLimiterConfiguration {

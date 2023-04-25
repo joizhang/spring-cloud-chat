@@ -9,6 +9,8 @@ import java.util.Set;
 
 /**
  * 密码授权token信息
+ *
+ * @author jumuning
  */
 public class OAuth2ResourceOwnerPasswordAuthenticationToken extends OAuth2ResourceOwnerBaseAuthenticationToken {
 

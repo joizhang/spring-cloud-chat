@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 事件机制处理退出相关
+ *
+ * @author zhangran
  */
 @Slf4j
 @Component

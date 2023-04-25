@@ -15,6 +15,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * 网关配置
+ *
+ * @author L.cm
  */
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(GatewayConfigProperties.class)

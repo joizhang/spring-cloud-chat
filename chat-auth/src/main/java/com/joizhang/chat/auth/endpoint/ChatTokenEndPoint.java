@@ -54,6 +54,8 @@ import java.util.stream.Collectors;
 
 /**
  * 删除token端点
+ *
+ * @author lengleng
  */
 @Slf4j
 @RequiredArgsConstructor

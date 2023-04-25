@@ -13,6 +13,8 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 /**
  * 路由配置信息
+ *
+ * @author lengleng
  */
 @Slf4j
 @RequiredArgsConstructor

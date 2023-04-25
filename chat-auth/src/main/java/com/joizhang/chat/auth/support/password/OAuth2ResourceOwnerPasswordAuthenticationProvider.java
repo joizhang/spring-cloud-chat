@@ -18,6 +18,8 @@ import java.util.Objects;
 
 /**
  * 处理用户名密码授权
+ *
+ * @author jumuning
  */
 @Slf4j
 public class OAuth2ResourceOwnerPasswordAuthenticationProvider

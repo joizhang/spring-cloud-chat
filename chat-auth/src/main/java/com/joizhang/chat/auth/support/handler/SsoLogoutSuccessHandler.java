@@ -11,6 +11,8 @@ import java.io.IOException;
 
 /**
  * sso 退出功能 ，根据客户端传入跳转
+ *
+ * @author lengleng
  */
 public class SsoLogoutSuccessHandler implements LogoutSuccessHandler {
 

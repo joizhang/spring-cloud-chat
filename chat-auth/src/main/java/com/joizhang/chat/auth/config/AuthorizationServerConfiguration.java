@@ -35,6 +35,8 @@ import java.util.Arrays;
 
 /**
  * 认证服务器配置
+ *
+ * @author lengleng
  */
 @RequiredArgsConstructor
 @Configuration
