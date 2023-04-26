@@ -19,7 +19,7 @@ public enum MessageContentType {
 
     FRIEND_REQ(5, "Friend request");
 
-    private final int type;
+    private final Integer type;
 
     private final String description;
 }
