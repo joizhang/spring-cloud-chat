@@ -21,5 +21,5 @@ public interface ChatMessageService extends IService<ChatMessage> {
      *
      * @param messageVo 消息
      */
-    void publishToCustomer(MessageVo messageVo);
+    void consume(MessageVo messageVo);
 }

@@ -32,7 +32,7 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
     }
 
     @Override
-    public void publishToCustomer(MessageVo messageVo) {
+    public void consume(MessageVo messageVo) {
         ChatMessage entity = new ChatMessage();
         BeanUtils.copyProperties(messageVo, entity);
         baseMapper.insert(entity);
