@@ -6,8 +6,8 @@ import com.joizhang.chat.common.core.util.MsgUtils;
 import com.joizhang.chat.common.core.util.R;
 import com.joizhang.chat.common.security.annotation.Inner;
 import com.joizhang.chat.web.api.dto.AppSmsDTO;
-import com.joizhang.chat.web.api.dto.CustomerInfo;
 import com.joizhang.chat.web.api.entity.ChatCustomer;
+import com.joizhang.chat.web.api.vo.CustomerInfoVo;
 import com.joizhang.chat.web.service.AppService;
 import com.joizhang.chat.web.service.ChatCustomerService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -49,7 +49,7 @@ public class AppController {
      */
     @Inner
     @GetMapping("/info/{phone}")
-    public R<CustomerInfo> infoByMobile(@PathVariable String phone) {
+    public R<CustomerInfoVo> infoByMobile(@PathVariable String phone) {
         ChatCustomer customer = customerService
                 .getOne(Wrappers.<ChatCustomer>query().lambda().eq(ChatCustomer::getPhone, phone));
         if (customer == null) {

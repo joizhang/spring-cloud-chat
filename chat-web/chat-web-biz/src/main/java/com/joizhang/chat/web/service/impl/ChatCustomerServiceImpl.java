@@ -7,8 +7,8 @@ import com.joizhang.chat.common.core.exception.ErrorCodes;
 import com.joizhang.chat.common.core.util.MsgUtils;
 import com.joizhang.chat.common.core.util.R;
 import com.joizhang.chat.web.api.dto.CustomerDTO;
-import com.joizhang.chat.web.api.dto.CustomerInfo;
 import com.joizhang.chat.web.api.entity.ChatCustomer;
+import com.joizhang.chat.web.api.vo.CustomerInfoVo;
 import com.joizhang.chat.web.mapper.ChatCustomerMapper;
 import com.joizhang.chat.web.service.AppService;
 import com.joizhang.chat.web.service.ChatCustomerService;
@@ -41,8 +41,8 @@ public class ChatCustomerServiceImpl extends ServiceImpl<ChatCustomerMapper, Cha
     }
 
     @Override
-    public CustomerInfo getCustomerInfo(ChatCustomer customer) {
-        CustomerInfo customerInfo = new CustomerInfo();
+    public CustomerInfoVo getCustomerInfo(ChatCustomer customer) {
+        CustomerInfoVo customerInfo = new CustomerInfoVo();
         customerInfo.setChatCustomer(customer);
         // 设置角色列表
         return customerInfo;

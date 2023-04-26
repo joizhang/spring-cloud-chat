@@ -3,8 +3,8 @@ package com.joizhang.chat.web.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.joizhang.chat.common.core.util.R;
 import com.joizhang.chat.web.api.dto.CustomerDTO;
-import com.joizhang.chat.web.api.dto.CustomerInfo;
 import com.joizhang.chat.web.api.entity.ChatCustomer;
+import com.joizhang.chat.web.api.vo.CustomerInfoVo;
 
 /**
  * 聊天客户服务类
@@ -25,7 +25,7 @@ public interface ChatCustomerService extends IService<ChatCustomer> {
      * @param customer 用户
      * @return
      */
-    CustomerInfo getCustomerInfo(ChatCustomer customer);
+    CustomerInfoVo getCustomerInfo(ChatCustomer customer);
 
     /**
      * 注册聊天客户
