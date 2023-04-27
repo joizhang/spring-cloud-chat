@@ -56,6 +56,7 @@ CREATE TABLE `chat_friend` (
     `user_id` bigint NOT NULL COMMENT '用户id',
     `friend_id` bigint NOT NULL COMMENT '朋友id',
     `remark` varchar(256) NOT NULL COMMENT '备注',
+    `request_status` int NOT NULL COMMENT '好友请求状态',
     `del_flag` char(1) DEFAULT '0' COMMENT '0-正常，1-删除',
     `create_time` datetime DEFAULT NULL COMMENT '创建时间',
     `update_time` datetime DEFAULT NULL COMMENT '修改时间',
