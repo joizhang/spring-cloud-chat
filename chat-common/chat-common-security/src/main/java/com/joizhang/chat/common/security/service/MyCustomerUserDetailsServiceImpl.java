@@ -55,6 +55,7 @@ public class MyCustomerUserDetailsServiceImpl implements MyUserDetailsService {
         }
         R<CustomerInfo> result = remoteChatCustomerService.infoByUsername(username);
         CustomerInfo info = RetOps.of(result)
+                .assertSuccess(r -> new RuntimeException("Internal server error"))
                 .getData()
                 .orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
         ChatCustomer chatCustomer = info.getChatCustomer();
