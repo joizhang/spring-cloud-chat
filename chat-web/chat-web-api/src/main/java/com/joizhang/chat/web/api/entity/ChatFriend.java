@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * 朋友关系表
@@ -24,16 +24,19 @@ public class ChatFriend extends BaseEntity {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
-    @NotBlank(message = "用户id不能为空")
+    @NotNull(message = "用户id不能为空")
     @Schema(description = "用户id")
     private Long userId;
 
-    @NotBlank(message = "朋友id不能为空")
+    @NotNull(message = "朋友id不能为空")
     @Schema(description = "朋友id")
     private Long friendId;
 
     @Schema(description = "朋友备注名")
     private String remark;
+
+    @Schema(description = "好友请求状态")
+    private Integer requestStatus;
 
     /**
      * 0-正常，1-删除
