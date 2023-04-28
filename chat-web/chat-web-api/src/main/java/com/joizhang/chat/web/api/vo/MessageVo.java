@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,11 +13,17 @@ import java.io.Serializable;
 public class MessageVo implements Serializable {
 
     /**
+     * 消息ID
+     */
+    private Long id;
+
+    /**
      * 发送消息的用户
      */
     private Long senderId;
+
     /**
-     * 目标用户（告知 STOMP 代理转发到哪个用户）
+     * 目标用户
      */
     private Long receiverId;
 
@@ -30,4 +37,8 @@ public class MessageVo implements Serializable {
      */
     private Integer contentType;
 
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
 }

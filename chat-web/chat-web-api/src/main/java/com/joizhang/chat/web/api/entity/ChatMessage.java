@@ -2,6 +2,8 @@ package com.joizhang.chat.web.api.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.joizhang.chat.common.mybatis.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -19,6 +21,7 @@ public class ChatMessage extends BaseEntity {
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     @Schema(description = "主键id")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @NotNull(message = "发送者不能为空")
@@ -34,7 +37,7 @@ public class ChatMessage extends BaseEntity {
     private String content;
 
     /**
-     * {@see com.joizhang.chat.web.api.constant.MessageContentType}
+     * {@link com.joizhang.chat.web.api.constant.MessageContentType}
      */
     @NotNull(message = "消息类型不能为空")
     @Schema(description = "消息类型：1-error, 2-text and emoji, 3-image, 4-audio, 5-video")

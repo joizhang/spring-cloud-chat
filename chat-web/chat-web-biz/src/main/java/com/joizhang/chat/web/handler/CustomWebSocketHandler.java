@@ -5,6 +5,7 @@ import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joizhang.chat.web.api.constant.MessageContentType;
+import com.joizhang.chat.web.api.entity.ChatMessage;
 import com.joizhang.chat.web.api.vo.MessageVo;
 import com.joizhang.chat.web.service.ChatMessageService;
 import com.joizhang.chat.web.util.WebSocketSessionHolder;
@@ -20,6 +21,7 @@ import org.springframework.web.socket.handler.ConcurrentWebSocketSessionDecorato
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -45,18 +47,30 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
         ObjectMapper objectMapper = new ObjectMapper();
         MessageVo errorMessage = null;
         try {
-            MessageVo messageVo = objectMapper.readValue(payload, MessageVo.class);
-            log.debug("sessionId {} ,msg {}", session.getId(), messageVo);
-            messageService.sendToMQ(messageVo);
+            ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
+            log.debug("sessionId {} ,msg {}", session.getId(), chatMessage);
+            messageService.sendToMQ(chatMessage);
         } catch (JsonProcessingException e) {
             // 消息结构异常
-            errorMessage = new MessageVo(0L, 0L,
-                    "ERROR: ILLEGAL DATA FORMAT", MessageContentType.ERROR.getType());
+            errorMessage = new MessageVo(
+                    0L,
+                    0L,
+                    0L,
+                    "ILLEGAL DATA FORMAT",
+                    MessageContentType.ERROR.getType(),
+                    LocalDateTime.now()
+            );
         } catch (AmqpException e) {
             // 消息队列异常
             log.error("Message queue error: {}", e.getMessage());
-            errorMessage = new MessageVo(0L, 0L,
-                    "ERROR: MESSAGE QUEUE CONNECTION ERROR", MessageContentType.ERROR.getType());
+            errorMessage = new MessageVo(
+                    0L,
+                    0L,
+                    0L,
+                    "MESSAGE QUEUE CONNECTION ERROR",
+                    MessageContentType.ERROR.getType(),
+                    LocalDateTime.now()
+            );
         }
         if (ObjectUtil.isNotNull(errorMessage)) {
             String jsonStr = JSONUtil.toJsonStr(errorMessage);

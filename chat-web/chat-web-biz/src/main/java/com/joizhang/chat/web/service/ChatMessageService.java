@@ -2,7 +2,8 @@ package com.joizhang.chat.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.joizhang.chat.web.api.entity.ChatMessage;
-import com.joizhang.chat.web.api.vo.MessageVo;
+
+import java.util.List;
 
 /**
  * 聊天消息 Service
@@ -12,14 +13,23 @@ public interface ChatMessageService extends IService<ChatMessage> {
     /**
      * 发送至消息队列
      *
-     * @param messageVo 消息
+     * @param chatMessage 消息
      */
-    void sendToMQ(MessageVo messageVo);
+    void sendToMQ(ChatMessage chatMessage);
 
     /**
      * 发送给消息接收者
      *
-     * @param messageVo 消息
+     * @param chatMessage 消息
      */
-    void consume(MessageVo messageVo);
+    void consume(ChatMessage chatMessage);
+
+    /**
+     * 查询聊天历史记录
+     *
+     * @param userId       当前用户ID
+     * @param serverStubId 客户端存储的服务器存根ID
+     * @return 聊天历史记录
+     */
+    List<ChatMessage> getHistory(Long userId, Long serverStubId);
 }

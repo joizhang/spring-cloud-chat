@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.joizhang.chat.web.api.constant.FriendRequestStatus;
 import com.joizhang.chat.web.api.constant.MessageContentType;
 import com.joizhang.chat.web.api.entity.ChatFriend;
-import com.joizhang.chat.web.api.vo.MessageVo;
+import com.joizhang.chat.web.api.entity.ChatMessage;
 import com.joizhang.chat.web.mapper.ChatFriendMapper;
 import com.joizhang.chat.web.service.ChatFriendService;
 import com.joizhang.chat.web.service.ChatMessageService;
@@ -33,12 +33,11 @@ public class ChatFriendServiceImpl extends ServiceImpl<ChatFriendMapper, ChatFri
     public void saveAndSendToMQ(ChatFriend chatFriend) {
         chatFriend.setRequestStatus(FriendRequestStatus.PENDING.getStatus());
         this.save(chatFriend);
-        MessageVo messageVo = new MessageVo(
-                chatFriend.getUserId(),
-                chatFriend.getFriendId(),
-                FriendRequestStatus.PENDING.getStatus().toString(),
-                MessageContentType.FRIEND_REQ.getType()
-        );
-        messageService.sendToMQ(messageVo);
+        ChatMessage chatMessage = new ChatMessage();
+        chatMessage.setSenderId(chatFriend.getUserId());
+        chatMessage.setReceiverId(chatFriend.getFriendId());
+        chatMessage.setContent(FriendRequestStatus.PENDING.getStatus().toString());
+        chatMessage.setContentType(MessageContentType.FRIEND_REQ.getType());
+        messageService.sendToMQ(chatMessage);
     }
 }
