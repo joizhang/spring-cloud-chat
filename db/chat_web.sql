@@ -44,7 +44,7 @@ CREATE TABLE `chat_message` (
     `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
     `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
     PRIMARY KEY (`id`),
-    KEY `message_idx1_from_to` (`sender_id`, `receiver_id`)
+    KEY `message_idx1_receiver` (`receiver_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='聊天消息表';
 
 -- ----------------------------

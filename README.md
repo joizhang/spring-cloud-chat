@@ -30,9 +30,7 @@
 ### 模块说明
 
 ```shell
-chat-ui  -- https://github.com/joizhang/chat-ui
-
-chat
+spring-boot-chat
 ├── chat-auth -- 授权服务提供[3000]
 └── chat-common -- 系统公共模块
      ├── chat-common-bom -- 全局依赖管理控制
@@ -54,6 +52,10 @@ chat
      ├── chat-upms-api -- 客户聊天api模块
      └── chat-upms-biz -- 客户聊天业务处理模块[4001]
 ```
+
+### 前端页面
+
+chat-ui -- https://github.com/joizhang/chat-ui
 
 ## 参考
 
