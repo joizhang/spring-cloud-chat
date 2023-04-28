@@ -57,17 +57,17 @@ chat
 
 ## 参考
 
-### 基于 `org.springframework.web.socket.config.annotation.EnableWebSocket`
+### 基于 `EnableWebSocket`
 
 - [Spring WebSocket](https://zetcode.com/spring/websocket/)
 - [【WEB系列】springboot + websocket初体验](https://spring.hhui.top/spring-blog/2019/04/21/190421-SpringBoot%E9%AB%98%E7%BA%A7%E7%AF%87WEB%E4%B9%8Bwebsocket%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/)
 
-### 基于 `org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker`
+### 基于 `EnableWebSocketMessageBroker`
 
 - [SpringBoot 实现 Websocket 通信详解](http://www.mydlq.club/article/86/)
 - [Chat application using Spring WebSockets](https://github.com/salmar/spring-websocket-chat)
 
-### 基于 `org.springframework.web.socket.server.standard.ServerEndpointExporter`
+### 基于 `ServerEndpointExporter`
 
 - [Spring Boot 精选课程](https://github.com/ityouknow/spring-boot-leaning/tree/master/2.x_42_courses)
 - [springboot整合websocket](https://github.com/Tellsea/springboot-learn/tree/master/springboot-websocket)
