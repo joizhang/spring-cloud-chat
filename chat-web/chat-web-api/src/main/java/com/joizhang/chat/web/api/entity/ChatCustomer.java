@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.joizhang.chat.common.mybatis.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -23,6 +25,7 @@ public class ChatCustomer extends BaseEntity {
      */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     @Schema(description = "主键id")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /**

@@ -21,7 +21,7 @@ public enum MessageContentType {
     AUDIO(5, "Audio"),
 
     /**
-     * {@see com.joizhang.chat.web.api.constant.FriendRequestStatus}
+     * {@link com.joizhang.chat.web.api.constant.FriendRequestStatus}
      */
     FRIEND_REQ(5, "Friend request");
 

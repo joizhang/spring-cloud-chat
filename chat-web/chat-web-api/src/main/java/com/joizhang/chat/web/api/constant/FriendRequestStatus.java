@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 /**
  * 好友请求状态
  *
- * {@see com.joizhang.chat.web.api.constant.MessageContentType#FRIEND_REQ}
+ * {@link com.joizhang.chat.web.api.constant.MessageContentType#FRIEND_REQ}
  */
 @RequiredArgsConstructor
 @Getter
