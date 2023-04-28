@@ -51,7 +51,7 @@ public interface CommonConstants {
     /**
      * 后端工程名
      */
-    String BACK_END_PROJECT = "spring-boot-chat";
+    String BACK_END_PROJECT = "spring-cloud-chat";
 
     /**
      * 成功标记

@@ -16,12 +16,12 @@ public interface SecurityConstants {
     /**
      * 前缀
      */
-    String PROJECT_PREFIX = "spring-boot-chat";
+    String PROJECT_PREFIX = "spring-cloud-chat";
 
     /**
      * 项目的license
      */
-    String PROJECT_LICENSE = "https://github.com/joizhang/spring-boot-chat";
+    String PROJECT_LICENSE = "https://github.com/joizhang/spring-cloud-chat";
 
     /**
      * 内部

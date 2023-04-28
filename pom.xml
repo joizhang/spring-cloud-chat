@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.joizhang</groupId>
-    <artifactId>spring-boot-chat</artifactId>
+    <artifactId>spring-cloud-chat</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>spring-boot-chat</name>
-    <url>https://github.com/joizhang/spring-boot-chat</url>
+    <name>spring-cloud-chat</name>
+    <url>https://github.com/joizhang/spring-cloud-chat</url>
 
     <modules>
         <module>chat-gateway</module>

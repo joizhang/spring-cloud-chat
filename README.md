@@ -1,4 +1,4 @@
-# spring-boot-chat
+# spring-cloud-chat
 
 ## 系统说明
 
@@ -30,7 +30,7 @@
 ### 模块说明
 
 ```shell
-spring-boot-chat
+spring-cloud-chat
 ├── chat-auth -- 授权服务提供[3000]
 └── chat-common -- 系统公共模块
      ├── chat-common-bom -- 全局依赖管理控制
