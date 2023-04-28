@@ -5,6 +5,15 @@
 - 权限管理系统基于 [pig](https://github.com/pig-mesh/pig)
 - 聊天应用基于 Vue 3 + TypeScript，仿[WhatsApp](https://web.whatsapp.com/)风格
 
+## 核心功能
+
+- [x] 离线消息保存
+- [x] 一对一聊天
+- [x] 基于Websocket的消息推送
+- [ ] 基于一致性哈希的分布式消息服务器
+- [ ] 群组聊天(最多100人)
+- [ ] 多设备支持，同一个账号可以同时登录多个设备。
+
 ## 快速开始
 
 ### 核心依赖
@@ -74,5 +83,6 @@ chat
 
 ### 相关资料
 
+- [Design A Chat System](https://bytebytego.com/courses/system-design-interview/design-a-chat-system)
 - [【websocket】spring boot 集成 websocket 的四种方式](https://juejin.cn/post/6844903976727494669#heading-25)
 - [IM即时通讯实现以及技术难点](https://www.bilibili.com/video/BV1KM411S7WT/)
