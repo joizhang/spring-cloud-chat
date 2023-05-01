@@ -29,7 +29,7 @@
 
 ### 模块说明
 
-```shell
+```text
 spring-cloud-chat
 ├── chat-auth -- 授权服务提供[3000]
 └── chat-common -- 系统公共模块

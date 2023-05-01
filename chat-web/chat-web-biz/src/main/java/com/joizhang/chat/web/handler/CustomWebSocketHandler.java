@@ -52,6 +52,7 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
             messageService.sendToMQ(chatMessage);
         } catch (JsonProcessingException e) {
             // 消息结构异常
+            log.error("Illegal data format: {}", e.getMessage());
             errorMessage = new MessageVo(
                     0L,
                     0L,
