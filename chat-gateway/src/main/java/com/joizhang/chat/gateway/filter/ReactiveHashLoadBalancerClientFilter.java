@@ -2,7 +2,7 @@ package com.joizhang.chat.gateway.filter;
 
 import cn.hutool.core.util.StrUtil;
 import com.joizhang.chat.gateway.config.GatewayConfigProperties;
-import com.joizhang.chat.gateway.loadbalancer.ConsistHashLoadBalancer;
+import com.joizhang.chat.gateway.loadbalancer.ConsistentHashLoadBalancer;
 import com.joizhang.chat.gateway.loadbalancer.IPHashLoadBalancer;
 import com.joizhang.chat.gateway.loadbalancer.HashLoadBalancerType;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.*
 
 /**
  * A {@link GlobalFilter} implementation that routes requests using
- * {@link IPHashLoadBalancer} or {@link ConsistHashLoadBalancer}.
+ * {@link IPHashLoadBalancer} or {@link ConsistentHashLoadBalancer}.
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
 @Slf4j
@@ -64,7 +64,7 @@ public class ReactiveHashLoadBalancerClientFilter implements GlobalFilter, Order
         String loadBalancerType = gatewayConfigProperties.getHashLBType();
         if (StrUtil.isNotEmpty(loadBalancerType)) {
             if (HashLoadBalancerType.CONSISTENT_HASH.getName().equals(loadBalancerType)) {
-                this.loadBalancer = new ConsistHashLoadBalancer(provider, name);
+                this.loadBalancer = new ConsistentHashLoadBalancer(provider, name);
             } else {
                 this.loadBalancer = new IPHashLoadBalancer(provider, name);
             }

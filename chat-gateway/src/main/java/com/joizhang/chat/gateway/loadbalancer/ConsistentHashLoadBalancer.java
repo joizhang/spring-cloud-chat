@@ -1,6 +1,7 @@
 package com.joizhang.chat.gateway.loadbalancer;
 
-import lombok.AllArgsConstructor;
+import cn.hutool.core.lang.ConsistentHash;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
@@ -14,15 +15,13 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("rawtypes")
 @Slf4j
-@AllArgsConstructor
-public class IPHashLoadBalancer implements ReactorServiceInstanceHashLoadBalancer {
+@RequiredArgsConstructor
+public class ConsistentHashLoadBalancer implements ReactorServiceInstanceHashLoadBalancer {
 
     final ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;
 
     final String serviceId;
-
 
     @Override
     public Mono<Response<ServiceInstance>> choose(Request request) {
@@ -31,7 +30,6 @@ public class IPHashLoadBalancer implements ReactorServiceInstanceHashLoadBalance
         return supplier.get(request).next()
                 .map(serviceInstances -> processInstanceResponse(supplier, serviceInstances, request));
     }
-
 
     private Response<ServiceInstance> processInstanceResponse(ServiceInstanceListSupplier supplier,
                                                               List<ServiceInstance> serviceInstances,
@@ -57,14 +55,12 @@ public class IPHashLoadBalancer implements ReactorServiceInstanceHashLoadBalance
             return new DefaultResponse(instances.get(0));
         }
 
+        ConsistentHash<ServiceInstance> consistentHash = new ConsistentHash<>(2, instances);
         RequestDataContext requestContext = (RequestDataContext) request.getContext();
         Map<String, Object> attributes = requestContext.getClientRequest().getAttributes();
         String host = (String) attributes.get(XForwardedHeadersFilter.X_FORWARDED_FOR_HEADER);
-        int hash = Math.abs(host.hashCode());
-        int pos = hash % instances.size();
-        ServiceInstance instance = instances.get(pos);
+        ServiceInstance instance = consistentHash.get(host);
 
         return new DefaultResponse(instance);
     }
-
 }

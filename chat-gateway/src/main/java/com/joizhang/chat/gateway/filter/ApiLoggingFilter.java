@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -50,7 +51,7 @@ public class ApiLoggingFilter implements GlobalFilter, Ordered {
                 String ip = ips != null ? ips.get(0) : null;
                 String api = serverHttpRequest.getURI().getRawPath();
 
-                int code = 500;
+                int code = HttpStatus.INTERNAL_SERVER_ERROR.value();
                 if (exchange.getResponse().getStatusCode() != null) {
                     code = exchange.getResponse().getStatusCode().value();
                 }
