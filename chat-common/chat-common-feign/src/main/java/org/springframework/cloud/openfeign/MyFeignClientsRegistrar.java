@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * feign 自动配置功能 from mica
+ * feign 自动配置
  */
 public class MyFeignClientsRegistrar implements ImportBeanDefinitionRegistrar,
         BeanClassLoaderAware, EnvironmentAware {
@@ -44,7 +44,9 @@ public class MyFeignClientsRegistrar implements ImportBeanDefinitionRegistrar,
 
     private void registerFeignClients(BeanDefinitionRegistry registry) {
         List<String> factoryNames = SpringFactoriesLoader.loadFactoryNames(
-                getSpringFactoriesLoaderFactoryClass(), getBeanClassLoader());
+                getSpringFactoriesLoaderFactoryClass(),
+                getBeanClassLoader()
+        );
         List<String> feignClients = new ArrayList<>(factoryNames);
         // 支持 springboot 2.7 + 最新版本的配置方式
         ImportCandidates.load(FeignClient.class, getBeanClassLoader()).forEach(feignClients::add);
@@ -80,8 +82,7 @@ public class MyFeignClientsRegistrar implements ImportBeanDefinitionRegistrar,
                     String contextId = getContextId(attributes);
                     aliasBuilder.append(contextId);
                     definition.addPropertyValue("contextId", contextId);
-                }
-                else {
+                } else {
                     aliasBuilder.append(name);
                 }
 
@@ -106,10 +107,9 @@ public class MyFeignClientsRegistrar implements ImportBeanDefinitionRegistrar,
                     alias = qualifier;
                 }
 
-                BeanDefinitionHolder holder = new BeanDefinitionHolder(beanDefinition, className,
-                        new String[] { alias });
+                BeanDefinitionHolder holder = new BeanDefinitionHolder(
+                        beanDefinition, className, new String[] { alias });
                 BeanDefinitionReaderUtils.registerBeanDefinition(holder, registry);
-
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
