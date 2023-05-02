@@ -23,7 +23,6 @@ public class IPHashLoadBalancer implements ReactorServiceInstanceHashLoadBalance
 
     final String serviceId;
 
-
     @Override
     public Mono<Response<ServiceInstance>> choose(Request request) {
         ServiceInstanceListSupplier supplier = serviceInstanceListSupplierProvider
