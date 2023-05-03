@@ -53,7 +53,7 @@ public class MyFeignAutoConfiguration {
     @Bean
     public OkHttpClient okHttpClient() {
         return new OkHttpClient.Builder()
-                .retryOnConnectionFailure(false) // 是否开启缓存
+                .retryOnConnectionFailure(false) // 是否开启重试
                 .connectTimeout(30L, TimeUnit.SECONDS) // 连接超时时间
                 .readTimeout(30L, TimeUnit.SECONDS) // 读取超时时间
                 .writeTimeout(30L, TimeUnit.SECONDS)

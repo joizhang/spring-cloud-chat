@@ -84,10 +84,10 @@ public interface MyUserDetailsService extends UserDetailsService, Ordered {
     /**
      * 通过用户实体查询
      *
-     * @param pigUser user
+     * @param user user
      * @return UserDetails
      */
-    default UserDetails loadUserByUser(MyUser pigUser) {
-        return this.loadUserByUsername(pigUser.getUsername());
+    default UserDetails loadUserByUser(MyUser user) {
+        return this.loadUserByUsername(user.getUsername());
     }
 }

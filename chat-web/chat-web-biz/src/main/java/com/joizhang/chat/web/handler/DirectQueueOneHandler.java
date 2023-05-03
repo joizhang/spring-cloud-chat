@@ -26,7 +26,7 @@ public class DirectQueueOneHandler {
     public void directHandlerManualAck(ChatMessage chatMessage, Message message, Channel channel) {
         try {
             messageService.consume(chatMessage);
-            //  如果手动ACK，消息会被监听消费，但是消息在队列中依旧存在，如果未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
+            // 如果手动ACK，消息会被监听消费，但是消息在队列中依旧存在，如果未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
             long deliveryTag = message.getMessageProperties().getDeliveryTag();
             log.debug("直接队列1，手动ACK，接收消息：{}", JSONUtil.toJsonStr(chatMessage));
             // 通知 MQ 消息已被成功消费,可以ACK了

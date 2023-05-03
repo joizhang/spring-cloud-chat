@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -22,7 +23,6 @@ import java.util.List;
  * @author zhangran
  */
 @Slf4j
-@Component
 public class ApiLoggingFilter implements GlobalFilter, Ordered {
 
     private static final String START_TIME = "startTime";
@@ -33,9 +33,13 @@ public class ApiLoggingFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest serverHttpRequest = exchange.getRequest();
         if (log.isDebugEnabled()) {
-            String info = String.format("Method:{%s} Host:{%s} Path:{%s} Query:{%s}",
-                    serverHttpRequest.getMethod().name(), serverHttpRequest.getURI().getHost(),
-                    serverHttpRequest.getURI().getPath(), serverHttpRequest.getQueryParams());
+            String info = String.format(
+                    "Method:{%s} Host:{%s} Path:{%s} Query:{%s}",
+                    serverHttpRequest.getMethod().name(),
+                    serverHttpRequest.getURI().getHost(),
+                    serverHttpRequest.getURI().getPath(),
+                    serverHttpRequest.getQueryParams()
+            );
             log.debug(info);
         }
         exchange.getAttributes().put(START_TIME, System.currentTimeMillis());
@@ -47,13 +51,14 @@ public class ApiLoggingFilter implements GlobalFilter, Ordered {
                 String ip = ips != null ? ips.get(0) : null;
                 String api = serverHttpRequest.getURI().getRawPath();
 
-                int code = 500;
+                int code = HttpStatus.INTERNAL_SERVER_ERROR.value();
                 if (exchange.getResponse().getStatusCode() != null) {
                     code = exchange.getResponse().getStatusCode().value();
                 }
                 // 当前仅记录日志，后续可以添加日志队列，来过滤请求慢的接口
                 if (log.isDebugEnabled()) {
-                    log.debug("来自IP地址：{}，请求接口：{}，响应状态码：{}，请求耗时：{}ms", ip, api, code, executeTime);
+                    log.debug("来自IP地址：{}，请求接口：{}，响应状态码：{}，请求耗时：{}ms",
+                            ip, api, code, executeTime);
                 }
             }
         }));
