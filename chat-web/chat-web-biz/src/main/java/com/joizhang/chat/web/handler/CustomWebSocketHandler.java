@@ -8,6 +8,8 @@ import com.joizhang.chat.web.api.constant.MessageContentType;
 import com.joizhang.chat.web.api.entity.ChatMessage;
 import com.joizhang.chat.web.api.vo.MessageVo;
 import com.joizhang.chat.web.service.ChatMessageService;
+import com.joizhang.chat.web.util.BeanValidationResult;
+import com.joizhang.chat.web.util.ValidationUtil;
 import com.joizhang.chat.web.util.WebSocketSessionHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,8 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
 
     private final ChatMessageService messageService;
 
+    private final ObjectMapper objectMapper;
+
     @Override
     public void afterConnectionEstablished(@NonNull WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
@@ -44,11 +48,14 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
         String sessionKey = this.sessionKeyGenerator.sessionKey(session);
         WebSocketSession sessionDecorator = WebSocketSessionHolder.getSession(sessionKey);
         String payload = message.getPayload();
-        ObjectMapper objectMapper = new ObjectMapper();
         MessageVo errorMessage = null;
         try {
             ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
             log.debug("sessionId {} ,msg {}", session.getId(), chatMessage);
+            BeanValidationResult result = ValidationUtil.warpValidate(chatMessage);
+            if (!result.isSuccess()) {
+                throw new IllegalArgumentException(result.getErrorMessages().get(0).getMessage());
+            }
             messageService.sendToMQ(chatMessage);
         } catch (JsonProcessingException e) {
             // 消息结构异常
@@ -69,6 +76,17 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
                     0L,
                     0L,
                     "MESSAGE QUEUE CONNECTION ERROR",
+                    MessageContentType.ERROR.getType(),
+                    LocalDateTime.now()
+            );
+        } catch (IllegalArgumentException e) {
+            // 消息结构异常
+            log.error("Illegal data format: {}", e.getMessage());
+            errorMessage = new MessageVo(
+                    0L,
+                    0L,
+                    0L,
+                    "ILLEGAL ARGUMENT",
                     MessageContentType.ERROR.getType(),
                     LocalDateTime.now()
             );
