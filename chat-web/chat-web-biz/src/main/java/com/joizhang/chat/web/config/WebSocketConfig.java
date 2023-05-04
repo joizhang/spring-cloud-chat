@@ -1,5 +1,6 @@
 package com.joizhang.chat.web.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joizhang.chat.web.handler.*;
 import com.joizhang.chat.web.service.ChatMessageService;
 import lombok.RequiredArgsConstructor;
@@ -41,9 +42,9 @@ public class WebSocketConfig {
     @Bean
     @ConditionalOnMissingBean({TextWebSocketHandler.class})
     public WebSocketHandler webSocketHandler(@Autowired(required = false) SessionKeyGenerator sessionKeyGenerator,
-                                             ChatMessageService messageService) {
+                                             ChatMessageService messageService, ObjectMapper objectMapper) {
         CustomWebSocketHandler customWebSocketHandler =
-                new CustomWebSocketHandler(sessionKeyGenerator, messageService);
+                new CustomWebSocketHandler(sessionKeyGenerator, messageService, objectMapper);
         return new MapSessionWebSocketHandlerDecorator(customWebSocketHandler, sessionKeyGenerator);
     }
 
