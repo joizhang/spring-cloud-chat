@@ -16,7 +16,7 @@ public enum FriendRequestStatus {
 
     ACCEPTED(2, "Accepted"),
 
-    DECLINED(3, "Declined");
+    /*DECLINED(3, "Declined")*/;
 
     private final Integer status;
 

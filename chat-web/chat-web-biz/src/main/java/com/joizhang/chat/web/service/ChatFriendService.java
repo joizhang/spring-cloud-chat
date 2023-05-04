@@ -3,6 +3,9 @@ package com.joizhang.chat.web.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.joizhang.chat.web.api.entity.ChatFriend;
 
+/**
+ * 好友关系 Service
+ */
 public interface ChatFriendService extends IService<ChatFriend> {
 
     /**
