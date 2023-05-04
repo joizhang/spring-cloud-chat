@@ -1,6 +1,7 @@
 package com.joizhang.chat.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.joizhang.chat.web.api.entity.ChatMessage;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface ChatMessageService extends IService<ChatMessage> {
      *
      * @param chatMessage 消息
      */
-    void consume(ChatMessage chatMessage);
+    void consume(ChatMessage chatMessage) throws JsonProcessingException;
 
     /**
      * 查询聊天历史记录
