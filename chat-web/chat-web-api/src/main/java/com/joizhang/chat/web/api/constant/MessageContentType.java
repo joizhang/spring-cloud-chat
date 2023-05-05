@@ -23,7 +23,10 @@ public enum MessageContentType {
     /**
      * {@link com.joizhang.chat.web.api.constant.FriendRequestStatus}
      */
-    FRIEND_REQ(5, "Friend request");
+    FRIEND_REQ(5, "Friend request"),
+
+    ACK(6, "Message ACK"),
+    ;
 
     private final Integer type;
 
