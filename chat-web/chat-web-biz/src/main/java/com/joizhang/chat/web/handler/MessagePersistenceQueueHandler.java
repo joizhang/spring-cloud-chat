@@ -35,7 +35,7 @@ public class MessagePersistenceQueueHandler {
         }
         catch (Exception e) {
             log.error(e.getMessage());
-            // TODO 通知发送着消息传递失败
+            // TODO 通知发送者消息传递失败
         }
     }
 
