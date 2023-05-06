@@ -23,7 +23,7 @@ public interface ChatMessageService extends IService<ChatMessage> {
      *
      * @param chatMessage 消息
      */
-    void consume(ChatMessage chatMessage) throws JsonProcessingException;
+    void pushToReceiver(ChatMessage chatMessage) throws JsonProcessingException;
 
     /**
      * 查询聊天历史记录

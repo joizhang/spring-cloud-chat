@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.joizhang.chat.common.core.constant.CacheConstants;
 import com.joizhang.chat.web.api.constant.RabbitConstants;
 import com.joizhang.chat.web.api.entity.ChatMessage;
 import com.joizhang.chat.web.api.vo.MessageVo;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
@@ -31,19 +33,26 @@ import java.util.List;
 @Service
 public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatMessage> implements ChatMessageService {
 
+    private final RedisTemplate<String, Object> redisTemplate;
+
     private final RabbitTemplate rabbitTemplate;
 
     private final ObjectMapper objectMapper;
 
     @Override
     public void sendToMQ(ChatMessage chatMessage) {
-        rabbitTemplate.convertAndSend(RabbitConstants.DIRECT_MODE_QUEUE_ONE, chatMessage);
+        String sessionKey = String.valueOf(chatMessage.getReceiverId());
+        Boolean online = (Boolean) redisTemplate.opsForValue().get(CacheConstants.WS_SESSION_KEY + sessionKey);
+        if (Boolean.TRUE.equals(online)) {
+            // 如果接收者在线则发送到消息推送队列
+            rabbitTemplate.convertAndSend(RabbitConstants.EXCHANGE_FANOUT_MESSAGE, "", chatMessage);
+        }
+        rabbitTemplate.convertAndSend(RabbitConstants.QUEUE_WORK_MESSAGE_PERSISTENCE, chatMessage);
     }
 
     @Transactional
     @Override
-    public void consume(ChatMessage chatMessage) throws JsonProcessingException {
-        baseMapper.insert(chatMessage);
+    public void pushToReceiver(ChatMessage chatMessage) throws JsonProcessingException {
         String sessionKey = String.valueOf(chatMessage.getReceiverId());
         WebSocketSession session = WebSocketSessionHolder.getSession(sessionKey);
         if (ObjectUtil.isNull(session)) {
@@ -53,6 +62,7 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
         BeanUtils.copyProperties(chatMessage, messageVo);
         String jsonStr = objectMapper.writeValueAsString(messageVo);
         try {
+            log.debug("推送消息至：{}", messageVo.getReceiverId());
             session.sendMessage(new TextMessage(jsonStr));
         } catch (IOException e) {
             log.error("Socket connection error from {} to {}!",
