@@ -1,7 +1,10 @@
 package com.joizhang.chat.web.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.joizhang.chat.web.handler.*;
+import com.joizhang.chat.web.handler.CustomWebSocketHandler;
+import com.joizhang.chat.web.handler.SecuritySessionKeyGenerator;
+import com.joizhang.chat.web.handler.SessionKeyGenerator;
+import com.joizhang.chat.web.handler.UserAttributeHandshakeInterceptor;
 import com.joizhang.chat.web.service.ChatMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +12,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.NonNull;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
@@ -42,10 +44,10 @@ public class WebSocketConfig {
     @Bean
     @ConditionalOnMissingBean({TextWebSocketHandler.class})
     public WebSocketHandler webSocketHandler(@Autowired(required = false) SessionKeyGenerator sessionKeyGenerator,
-                                             ChatMessageService messageService, ObjectMapper objectMapper) {
-        CustomWebSocketHandler customWebSocketHandler =
-                new CustomWebSocketHandler(sessionKeyGenerator, messageService, objectMapper);
-        return new MapSessionWebSocketHandlerDecorator(customWebSocketHandler, sessionKeyGenerator);
+                                             ChatMessageService messageService,
+                                             ObjectMapper objectMapper,
+                                             RedisTemplate<String, Object> redisTemplate) {
+        return new CustomWebSocketHandler(sessionKeyGenerator, messageService, objectMapper, redisTemplate);
     }
 
     @Bean

@@ -24,6 +24,11 @@ public interface CacheConstants {
     String DEFAULT_CODE_KEY = "DEFAULT_CODE_KEY:";
 
     /**
+     * websocket session key 前缀
+     */
+    String WS_SESSION_KEY = "WS_SESSION_KEY:";
+
+    /**
      * 菜单信息缓存
      */
     String MENU_DETAILS = "menu_details";

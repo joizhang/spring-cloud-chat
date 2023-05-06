@@ -4,6 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.joizhang.chat.common.core.constant.CacheConstants;
 import com.joizhang.chat.web.api.constant.MessageContentType;
 import com.joizhang.chat.web.api.entity.ChatMessage;
 import com.joizhang.chat.web.api.vo.MessageVo;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.amqp.AmqpException;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.lang.NonNull;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -35,10 +37,13 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
 
     private final ObjectMapper objectMapper;
 
+    private final RedisTemplate<String, Object> redisTemplate;
+
     @Override
     public void afterConnectionEstablished(@NonNull WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
         String sessionKey = this.sessionKeyGenerator.sessionKey(session);
+        redisTemplate.opsForValue().set(CacheConstants.WS_SESSION_KEY + sessionKey, true);
         ConcurrentWebSocketSessionDecorator sessionDecorator =
                 new ConcurrentWebSocketSessionDecorator(session, 5000, 10240);
         WebSocketSessionHolder.addSession(sessionKey, sessionDecorator);
@@ -106,6 +111,7 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
                                       @NonNull CloseStatus closeStatus) throws Exception {
         super.afterConnectionClosed(session, closeStatus);
         String sessionKey = this.sessionKeyGenerator.sessionKey(session);
+        redisTemplate.opsForValue().set(CacheConstants.WS_SESSION_KEY + sessionKey, false);
         WebSocketSessionHolder.removeSession(sessionKey);
     }
 }

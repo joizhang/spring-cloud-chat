@@ -7,6 +7,7 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.WebSocketHandlerDecorator;
 
+@Deprecated
 public class MapSessionWebSocketHandlerDecorator extends WebSocketHandlerDecorator {
 
     private final SessionKeyGenerator sessionKeyGenerator;
