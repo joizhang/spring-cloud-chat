@@ -23,7 +23,7 @@ public class MessagePersistenceQueueHandler {
     @RabbitHandler
     public void persistenceMQHandlerManualAck(ChatMessage chatMessage, Message message, Channel channel) {
         try {
-            messageService.save(chatMessage);
+            messageService.saveAndAck(chatMessage);
             log.debug(
                     "队列：{}，手动ACK，接收消息：{}",
                     RabbitConstants.QUEUE_WORK_MESSAGE_PERSISTENCE,

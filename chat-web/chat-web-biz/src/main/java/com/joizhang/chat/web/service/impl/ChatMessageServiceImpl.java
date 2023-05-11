@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.joizhang.chat.common.core.constant.CacheConstants;
+import com.joizhang.chat.web.api.constant.MessageContentType;
 import com.joizhang.chat.web.api.constant.RabbitConstants;
 import com.joizhang.chat.web.api.entity.ChatMessage;
 import com.joizhang.chat.web.api.vo.MessageVo;
@@ -41,12 +41,6 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
 
     @Override
     public void sendToMQ(ChatMessage chatMessage) {
-        String sessionKey = String.valueOf(chatMessage.getReceiverId());
-        Boolean online = (Boolean) redisTemplate.opsForValue().get(CacheConstants.WS_SESSION_KEY + sessionKey);
-        if (Boolean.TRUE.equals(online)) {
-            // 如果接收者在线则发送到消息推送队列
-            rabbitTemplate.convertAndSend(RabbitConstants.EXCHANGE_FANOUT_MESSAGE, "", chatMessage);
-        }
         rabbitTemplate.convertAndSend(RabbitConstants.QUEUE_WORK_MESSAGE_PERSISTENCE, chatMessage);
     }
 
@@ -62,7 +56,7 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
         BeanUtils.copyProperties(chatMessage, messageVo);
         String jsonStr = objectMapper.writeValueAsString(messageVo);
         try {
-            log.debug("推送消息至：{}", messageVo.getReceiverId());
+            log.debug("推送消息至：{}", sessionKey);
             session.sendMessage(new TextMessage(jsonStr));
         } catch (IOException e) {
             log.error("Socket connection error from {} to {}!",
@@ -81,5 +75,24 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
                 .gt(ChatMessage::getId, serverStubId)
                 .gt(ChatMessage::getCreateTime, threeDaysAgo);
         return this.list(queryWrapper);
+    }
+
+    @Override
+    public void saveAndAck(ChatMessage chatMessage) {
+        // 保存消息
+        this.save(chatMessage);
+
+        // 发送到消息推送队列，推送给接收者进行消息下发
+        rabbitTemplate.convertAndSend(RabbitConstants.EXCHANGE_FANOUT_MESSAGE, "", chatMessage);
+
+        // 发送到消息推送队列，推送给发送者进行消息确认
+        ChatMessage confirmChatMessage = new ChatMessage();
+        BeanUtils.copyProperties(chatMessage, confirmChatMessage);
+        confirmChatMessage.setSenderId(0L);
+        confirmChatMessage.setReceiverId(chatMessage.getSenderId());
+        confirmChatMessage.setContentType(MessageContentType.ACK.getType());
+        confirmChatMessage.setContent(String.format("%s_%s_%s",
+                chatMessage.getSenderId(), chatMessage.getReceiverId(), chatMessage.getSeqNum()));
+        rabbitTemplate.convertAndSend(RabbitConstants.EXCHANGE_FANOUT_MESSAGE, "", confirmChatMessage);
     }
 }

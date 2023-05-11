@@ -33,4 +33,11 @@ public interface ChatMessageService extends IService<ChatMessage> {
      * @return 聊天历史记录
      */
     List<ChatMessage> getHistory(Long userId, Long serverStubId);
+
+    /**
+     * 保存消息并返回确认消息
+     *
+     * @param chatMessage 消息
+     */
+    void saveAndAck(ChatMessage chatMessage);
 }
