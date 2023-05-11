@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.joizhang.chat.common.core.util.R;
 import com.joizhang.chat.common.security.util.SecurityUtils;
 import com.joizhang.chat.web.api.constant.FriendRequestStatus;
+import com.joizhang.chat.web.api.dto.ChatFriendRequestDTO;
 import com.joizhang.chat.web.api.entity.ChatFriend;
 import com.joizhang.chat.web.service.ChatFriendService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -37,20 +38,20 @@ public class ChatFriendController {
     /**
      * 好友请求
      *
-     * @param chatFriend 参数
+     * @param friendRequestDTO 参数
      * @return 请求是否发送成功
      */
     @PostMapping("/request")
-    public R<String> save(@Valid @RequestBody ChatFriend chatFriend) {
+    public R<String> save(@Valid @RequestBody ChatFriendRequestDTO friendRequestDTO) {
         Long userId = SecurityUtils.getUser().getId();
         // 验证身份
-        if (!userId.equals(chatFriend.getUserId())) {
+        if (!userId.equals(friendRequestDTO.getUserId())) {
             return R.failed("Illegal identity");
         }
         ChatFriend friend = friendService.getOne(
                 Wrappers.<ChatFriend>lambdaQuery()
-                        .eq(ChatFriend::getUserId, chatFriend.getUserId())
-                        .eq(ChatFriend::getFriendId, chatFriend.getFriendId())
+                        .eq(ChatFriend::getUserId, friendRequestDTO.getUserId())
+                        .eq(ChatFriend::getFriendId, friendRequestDTO.getFriendId())
         );
         if (ObjectUtil.isNotNull(friend)) {
             // 判断是否有待处理的好友请求
@@ -62,7 +63,7 @@ public class ChatFriendController {
                 return R.failed("You are already friends.");
             }
         }
-        friendService.saveAndSendToMQ(chatFriend);
+        friendService.saveAndSendToMQ(friendRequestDTO);
         return R.ok();
     }
 }

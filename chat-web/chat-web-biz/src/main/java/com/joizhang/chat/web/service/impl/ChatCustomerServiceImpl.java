@@ -36,7 +36,7 @@ public class ChatCustomerServiceImpl extends ServiceImpl<ChatCustomerMapper, Cha
         BeanUtils.copyProperties(customerDTO, customer);
         customer.setDelFlag(CommonConstants.STATUS_NORMAL);
         customer.setPassword(ENCODER.encode(customer.getPassword()));
-        baseMapper.insert(customer);
+        this.save(customer);
         return Boolean.TRUE;
     }
 

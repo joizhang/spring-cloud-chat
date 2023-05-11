@@ -1,6 +1,7 @@
 package com.joizhang.chat.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.joizhang.chat.web.api.dto.ChatFriendRequestDTO;
 import com.joizhang.chat.web.api.entity.ChatFriend;
 
 /**
@@ -19,7 +20,7 @@ public interface ChatFriendService extends IService<ChatFriend> {
     /**
      * 保存并发送至消息队列
      *
-     * @param chatFriend 实体
+     * @param chatFriendRequestDTO 实体
      */
-    void saveAndSendToMQ(ChatFriend chatFriend);
+    void saveAndSendToMQ(ChatFriendRequestDTO chatFriendRequestDTO);
 }

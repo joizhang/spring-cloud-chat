@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.joizhang.chat.web.api.constant.FriendRequestStatus;
 import com.joizhang.chat.web.api.constant.MessageContentType;
+import com.joizhang.chat.web.api.dto.ChatFriendRequestDTO;
 import com.joizhang.chat.web.api.entity.ChatFriend;
 import com.joizhang.chat.web.api.entity.ChatMessage;
 import com.joizhang.chat.web.mapper.ChatFriendMapper;
@@ -31,20 +32,20 @@ public class ChatFriendServiceImpl extends ServiceImpl<ChatFriendMapper, ChatFri
 
     @Transactional
     @Override
-    public void saveAndSendToMQ(ChatFriend chatFriend) {
+    public void saveAndSendToMQ(ChatFriendRequestDTO chatFriendRequestDTO) {
         ChatMessage chatMessage = new ChatMessage();
-        if (FriendRequestStatus.PENDING.getStatus().equals(chatFriend.getRequestStatus())) {
+        if (FriendRequestStatus.PENDING.getStatus().equals(chatFriendRequestDTO.getRequestStatus())) {
             chatMessage.setContent(FriendRequestStatus.PENDING.getStatus().toString());
             // 如果是PENDING，则保存好友请求发起者的好友关系信息
-            this.save(chatFriend);
-        } else if (FriendRequestStatus.ACCEPTED.getStatus().equals(chatFriend.getRequestStatus())) {
+            this.save(chatFriendRequestDTO);
+        } else if (FriendRequestStatus.ACCEPTED.getStatus().equals(chatFriendRequestDTO.getRequestStatus())) {
             chatMessage.setContent(FriendRequestStatus.ACCEPTED.getStatus().toString());
             // 如果是ACCEPTED，则保存好友请求接受者的好友关系信息
-            this.save(chatFriend);
+            this.save(chatFriendRequestDTO);
             // 然后更新好友请求发起者的好友关系信息
             LambdaQueryWrapper<ChatFriend> wrapper = Wrappers.<ChatFriend>lambdaQuery()
-                    .eq(ChatFriend::getUserId, chatFriend.getFriendId())
-                    .eq(ChatFriend::getFriendId, chatFriend.getUserId())
+                    .eq(ChatFriend::getUserId, chatFriendRequestDTO.getFriendId())
+                    .eq(ChatFriend::getFriendId, chatFriendRequestDTO.getUserId())
                     .eq(ChatFriend::getRequestStatus, FriendRequestStatus.PENDING.getStatus());
             ChatFriend friendRequestSender = this.getOne(wrapper);
             friendRequestSender.setRequestStatus(FriendRequestStatus.ACCEPTED.getStatus());
@@ -52,9 +53,9 @@ public class ChatFriendServiceImpl extends ServiceImpl<ChatFriendMapper, ChatFri
         } else {
             throw new IllegalArgumentException("Illegal friend request");
         }
-
-        chatMessage.setSenderId(chatFriend.getUserId());
-        chatMessage.setReceiverId(chatFriend.getFriendId());
+        chatMessage.setSenderId(chatFriendRequestDTO.getUserId());
+        chatMessage.setReceiverId(chatFriendRequestDTO.getFriendId());
+        chatMessage.setSeqNum(chatFriendRequestDTO.getSeqNum());
         chatMessage.setContentType(MessageContentType.FRIEND_REQ.getType());
         messageService.sendToMQ(chatMessage);
     }
