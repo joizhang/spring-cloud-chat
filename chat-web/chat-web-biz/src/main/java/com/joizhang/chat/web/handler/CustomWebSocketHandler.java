@@ -69,7 +69,20 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
                     0L,
                     0L,
                     0L,
+                    0L,
                     "ILLEGAL DATA FORMAT",
+                    MessageContentType.ERROR.getType(),
+                    LocalDateTime.now()
+            );
+        } catch (IllegalArgumentException e) {
+            // 消息结构异常
+            log.error("Illegal message: {}", e.getMessage());
+            errorMessage = new MessageVo(
+                    0L,
+                    0L,
+                    0L,
+                    0L,
+                    "ILLEGAL ARGUMENT",
                     MessageContentType.ERROR.getType(),
                     LocalDateTime.now()
             );
@@ -80,18 +93,20 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
                     0L,
                     0L,
                     0L,
+                    0L,
                     "MESSAGE QUEUE CONNECTION ERROR",
                     MessageContentType.ERROR.getType(),
                     LocalDateTime.now()
             );
-        } catch (IllegalArgumentException e) {
-            // 消息结构异常
-            log.error("Illegal data format: {}", e.getMessage());
+        } catch (Exception e) {
+            // 其他异常
+            log.error("Server error: {}", e.getMessage());
             errorMessage = new MessageVo(
                     0L,
                     0L,
                     0L,
-                    "ILLEGAL ARGUMENT",
+                    0L,
+                    "SERVER ERROR",
                     MessageContentType.ERROR.getType(),
                     LocalDateTime.now()
             );

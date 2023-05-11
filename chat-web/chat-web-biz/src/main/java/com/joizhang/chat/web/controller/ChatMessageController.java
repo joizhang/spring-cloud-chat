@@ -3,7 +3,6 @@ package com.joizhang.chat.web.controller;
 import com.joizhang.chat.common.core.util.R;
 import com.joizhang.chat.common.security.util.SecurityUtils;
 import com.joizhang.chat.web.api.entity.ChatMessage;
-import com.joizhang.chat.web.api.vo.Greeting;
 import com.joizhang.chat.web.api.vo.MessageVo;
 import com.joizhang.chat.web.service.ChatMessageService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -11,15 +10,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpHeaders;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
