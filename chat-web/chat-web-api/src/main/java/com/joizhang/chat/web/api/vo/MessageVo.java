@@ -28,6 +28,11 @@ public class MessageVo implements Serializable {
     private Long receiverId;
 
     /**
+     * 序号
+     */
+    private Long seqNum;
+
+    /**
      * 消息内容
      */
     private String content;

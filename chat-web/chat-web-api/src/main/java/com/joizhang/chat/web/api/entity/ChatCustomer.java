@@ -18,50 +18,27 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class ChatCustomer extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 主键ID
-     */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     @Schema(description = "主键id")
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
-    /**
-     * 用户名
-     */
     @Schema(title = "用户名")
     private String username;
 
-    /**
-     * 密码
-     */
     @Schema(description = "密码")
     private String password;
 
-    /**
-     * 随机盐
-     */
     @JsonIgnore
     @Schema(description = "随机盐")
     private String salt;
 
-    /**
-     * 锁定标记
-     */
     @Schema(description = "锁定标记")
     private String lockFlag;
 
-    /**
-     * 手机号
-     */
     @Schema(description = "手机号")
     private String phone;
 
-    /**
-     * 头像
-     */
     @Schema(description = "头像地址")
     private String avatar;
 

@@ -37,6 +37,7 @@ CREATE TABLE `chat_message` (
     `id` bigint NOT NULL,
     `sender_id` bigint NOT NULL COMMENT '发送者ID',
     `receiver_id` bigint NOT NULL COMMENT '接收者ID',
+    `seq_num` bigint NOT NULL COMMENT '序号',
     `content` varchar(5000) NOT NULL COMMENT '消息内容',
     `content_type` int NOT NULL COMMENT '消息类型：1-text, 2-emoji, 3-image, 4-audio, 5-video',
     `create_time` datetime DEFAULT NULL COMMENT '创建时间',

@@ -32,6 +32,10 @@ public class ChatMessage extends BaseEntity {
     @Schema(description = "接收者ID")
     private Long receiverId;
 
+    @NotNull(message = "序号不能为空")
+    @Schema(description = "序号")
+    private Long seqNum;
+
     @NotBlank(message = "内容不能为空")
     @Schema(description = "消息内容")
     private String content;
