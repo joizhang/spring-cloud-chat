@@ -11,6 +11,7 @@
                     converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
     <conversionRule conversionWord="wEx"
                     converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+
     <!-- Console log output -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -47,9 +48,21 @@
         </filter>
     </appender>
 
+    <!-- 输出到logstash的appender -->
+    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <!--可以访问的logstash日志收集端口-->
+        <destination>xinlin-05:50000</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+
     <!--nacos 心跳 INFO 屏蔽-->
     <logger name="com.alibaba.nacos" level="OFF">
         <appender-ref ref="error"/>
+    </logger>
+
+    <logger name="com.joizhang.chat.web" level="DEBUG">
+        <appender-ref ref="console"/>
+        <appender-ref ref="logstash"/>
     </logger>
 
     <!-- Level: FATAL 0  ERROR 3  WARN 4  INFO 6  DEBUG 7 -->
