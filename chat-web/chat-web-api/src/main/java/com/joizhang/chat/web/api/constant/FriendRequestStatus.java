@@ -15,7 +15,6 @@ public enum FriendRequestStatus {
     PENDING(1, "Pending"),
 
     ACCEPTED(2, "Accepted"),
-
     ;
 
     private final Integer status;
