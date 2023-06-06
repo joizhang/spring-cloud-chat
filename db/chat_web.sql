@@ -68,21 +68,29 @@ CREATE TABLE `chat_friend` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='朋友关系表';
 
 -- ----------------------------
--- Table structure for chat_friend_request
+-- Table structure for chat_group
 -- ----------------------------
-DROP TABLE IF EXISTS `chat_friend_request`;
-CREATE TABLE `chat_friend_request` (
+DROP TABLE IF EXISTS `chat_group`;
+CREATE TABLE `chat_group` (
     `id` bigint NOT NULL,
-    `senderId` bigint DEFAULT NULL COMMENT '好友请求发送着',
-    `receiverId` bigint DEFAULT NULL COMMENT '好友请求接收者',
-    `status` int DEFAULT NULL COMMENT '好友请求状态：1-PENDING, 2-ACCEPTED, 3-DECLINED',
+    `group_name` varchar(64) NOT NULL COMMENT '群聊名',
     `create_time` datetime DEFAULT NULL COMMENT '创建时间',
     `update_time` datetime DEFAULT NULL COMMENT '修改时间',
     `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
     `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='群聊表';
+
+-- ----------------------------
+-- Table structure for chat_group_member
+-- ----------------------------
+DROP TABLE IF EXISTS `chat_group_member`;
+CREATE TABLE `chat_group_member` (
+    `id` bigint NOT NULL,
+    `group_id` bigint NOT NULL COMMENT '群聊id',
+    `user_id` bigint NOT NULL COMMENT '用户id',
     PRIMARY KEY (`id`),
-    KEY `friend_request_idx1_sender` (`senderId`),
-    KEY `friend_request_idx1_receiver` (`receiverId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='好友请求表';
+    UNIQUE KEY `group_member_idx1_group_user` (`group_id`, `user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='聊天群成员';
 
 SET FOREIGN_KEY_CHECKS = 1;
