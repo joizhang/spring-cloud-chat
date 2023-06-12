@@ -24,7 +24,7 @@
         <sms.version>2.0.2</sms.version>
         <mysql.version>8.0.32</mysql.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <hutool.version>5.8.17</hutool.version>
+        <hutool.version>5.8.18</hutool.version>
         <mica.version>2.7.10</mica.version>
         <spring-boot.version>2.7.10</spring-boot.version>
     </properties>
