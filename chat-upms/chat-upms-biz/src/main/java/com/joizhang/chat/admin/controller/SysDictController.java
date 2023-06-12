@@ -55,7 +55,8 @@ public class SysDictController {
     @GetMapping("/page")
     public R<IPage<SysDict>> getDictPage(Page<SysDict> page, SysDict sysDict) {
         LambdaQueryWrapper<SysDict> queryWrapper = Wrappers.<SysDict>lambdaQuery()
-                .like(StrUtil.isNotBlank(sysDict.getDictKey()), SysDict::getDictKey, sysDict.getDictKey());
+                .like(StrUtil.isNotBlank(sysDict.getDictKey()), SysDict::getDictKey, sysDict.getDictKey())
+                .orderByDesc(SysDict::getUpdateTime);
         Page<SysDict> sysDictPage = sysDictService.page(page, queryWrapper);
         return R.ok(sysDictPage);
     }
