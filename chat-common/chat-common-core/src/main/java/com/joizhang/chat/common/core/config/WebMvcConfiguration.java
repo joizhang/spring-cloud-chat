@@ -1,7 +1,6 @@
 package com.joizhang.chat.common.core.config;
 
 import cn.hutool.core.date.DatePattern;
-import com.joizhang.chat.common.core.jackson.JavaTimeModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.MessageSource;
