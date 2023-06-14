@@ -1,12 +1,10 @@
 package com.joizhang.chat.web.util;
 
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
-
 
 /**
  * java bean 校验工具类，此工具类基于validation-api（jakarta.validation-api）封装

@@ -12,6 +12,6 @@ class ValidationUtilTest {
         ChatMessage chatMessage = new ChatMessage();
         BeanValidationResult result = ValidationUtil.warpValidate(chatMessage);
         assertFalse(result.isSuccess());
-        assertEquals(4, result.getErrorMessages().size());
+        assertEquals(5, result.getErrorMessages().size());
     }
 }
