@@ -8,9 +8,9 @@ import com.joizhang.chat.common.core.constant.CommonConstants;
 import com.joizhang.chat.common.core.constant.SecurityConstants;
 import com.joizhang.chat.common.core.util.R;
 import com.joizhang.chat.common.core.util.RetOps;
-import com.joizhang.chat.web.api.dto.CustomerInfo;
 import com.joizhang.chat.web.api.entity.ChatCustomer;
 import com.joizhang.chat.web.api.feign.RemoteChatCustomerService;
+import com.joizhang.chat.web.api.vo.CustomerInfoVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * 聊天客户的详细信息实现
@@ -51,14 +52,14 @@ public class MyCustomerUserDetailsServiceImpl implements MyUserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Cache cache = cacheManager.getCache(CacheConstants.USER_DETAILS);
         if (ObjectUtil.isNotNull(cache) && ObjectUtil.isNotNull(cache.get(username))) {
-            return (MyUser) cache.get(username).get();
+            return (MyUser) Objects.requireNonNull(cache.get(username)).get();
         }
-        R<CustomerInfo> result = remoteChatCustomerService.infoByUsername(username);
-        CustomerInfo info = RetOps.of(result)
+        R<CustomerInfoVo> result = remoteChatCustomerService.infoByUsername(username);
+        CustomerInfoVo customerInfoVo = RetOps.of(result)
                 .assertSuccess(r -> new RuntimeException("Internal server error"))
                 .getData()
                 .orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
-        ChatCustomer chatCustomer = info.getChatCustomer();
+        ChatCustomer chatCustomer = customerInfoVo.getChatCustomer();
         UserDetails userDetails = new MyUser(
                 chatCustomer.getId(),
                 0L,

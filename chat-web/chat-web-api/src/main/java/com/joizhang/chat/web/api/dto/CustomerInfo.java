@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+@Deprecated
 @Data
 public class CustomerInfo implements Serializable {
 

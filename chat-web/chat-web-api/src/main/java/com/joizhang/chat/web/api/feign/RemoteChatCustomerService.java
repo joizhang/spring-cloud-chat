@@ -3,7 +3,7 @@ package com.joizhang.chat.web.api.feign;
 import com.joizhang.chat.common.core.constant.SecurityConstants;
 import com.joizhang.chat.common.core.constant.ServiceNameConstants;
 import com.joizhang.chat.common.core.util.R;
-import com.joizhang.chat.web.api.dto.CustomerInfo;
+import com.joizhang.chat.web.api.vo.CustomerInfoVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +21,6 @@ public interface RemoteChatCustomerService {
      * @return R
      */
     @GetMapping(value = "/svc/customer/info/{username}", headers = SecurityConstants.HEADER_FROM_IN)
-    R<CustomerInfo> infoByUsername(@PathVariable("username") String username);
+    R<CustomerInfoVo> infoByUsername(@PathVariable("username") String username);
 
 }

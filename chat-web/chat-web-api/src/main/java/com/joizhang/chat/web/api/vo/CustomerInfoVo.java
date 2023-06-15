@@ -8,6 +8,9 @@ import java.io.Serializable;
 @Data
 public class CustomerInfoVo implements Serializable {
 
+    /**
+     * 客户基本信息
+     */
     private ChatCustomer chatCustomer;
 
 }
