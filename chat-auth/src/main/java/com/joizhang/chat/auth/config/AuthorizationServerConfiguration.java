@@ -112,9 +112,10 @@ public class AuthorizationServerConfiguration {
                 Arrays.asList(
                         new OAuth2ResourceOwnerPasswordAuthenticationConverter(),
                         new OAuth2ResourceOwnerSmsAuthenticationConverter(),
-                        new OAuth2RefreshTokenAuthenticationConverter(),
-                        new OAuth2ClientCredentialsAuthenticationConverter(),
-                        new OAuth2AuthorizationCodeAuthenticationConverter(),
+                        // OAuth2TokenEndpointFilter中构造的DelegatingAuthenticationConverter中已经创建了这三个，会重复调用
+                        // new OAuth2RefreshTokenAuthenticationConverter(),
+                        // new OAuth2ClientCredentialsAuthenticationConverter(),
+                        // new OAuth2AuthorizationCodeAuthenticationConverter(),
                         new OAuth2AuthorizationCodeRequestAuthenticationConverter()
                 )
         );
